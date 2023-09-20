@@ -2,7 +2,9 @@ package src.gui;
 
 import javafx.beans.value.ChangeListener;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import src.Config;
 import src.gui.controllers.Controller;
 import src.gui.controllers.Screen;
@@ -40,6 +42,23 @@ public class GUI {
             System.err.printf("Failed loading scene %s\n", screen.getFilename());
             e.printStackTrace();
         }
+    }
+
+    public Stage loadDialog(Screen screen, StageStyle stageStyle, Modality modality) {
+        try {
+            Controller dialogController = screen.instantiateController(this);
+            Scene scene = ResourceLoader.loadScene(dialogController);
+            Stage dialog = new Stage(stageStyle);
+            dialog.initModality(modality);
+            dialog.initOwner(stage);
+            dialog.setScene(scene);
+            dialog.show();
+            return dialog;
+        } catch (IOException e) {
+            System.err.printf("Failed loading scene %s\n", screen.getFilename());
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public Stage getStage() {
