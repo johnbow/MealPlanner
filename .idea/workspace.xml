@@ -4,7 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c0eac42-ae49-4629-a0fe-4ef6521f7fba" name="Changes" comment="" />
+    <list default="true" id="4c0eac42-ae49-4629-a0fe-4ef6521f7fba" name="Changes" comment="initial commit">
+      <change afterPath="$PROJECT_DIR$/src/main/java/src/gui/controllers/RecipeController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/css/RecipeScreen.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/RecipeScreen.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/Config.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/GUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/ResourceLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/ResourceLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/components/Calendar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/components/Calendar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/components/WeekdayBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/components/WeekdayBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/controllers/CalendarController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/controllers/CalendarController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/controllers/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/controllers/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/controllers/Screen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/controllers/Screen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/CalendarScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/CalendarScreen.fxml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -28,6 +42,23 @@
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="MealPlanner" type="f1a62948:ProjectNode" />
               </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="MealPlanner" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="MealPlanner" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="application" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="MealPlanner" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
             </expand>
             <select />
           </tree_state>
@@ -38,11 +69,14 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="FxmlFile" />
         <option value="Enum" />
+        <option value="FxmlFile" />
         <option value="Class" />
       </list>
     </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -55,20 +89,21 @@
     </option>
   </component>
   <component name="ProjectId" id="2VWrIW6e9ckgW4G3XzH8qfZ8KPk" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/workspaces/java/MealPlanner",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/workspaces/java/MealPlanner&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="org.foodtracker" />
@@ -122,7 +157,7 @@
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
+        <option name="scriptParameters" value="" />
         <option name="taskDescriptions">
           <list />
         </option>
@@ -138,11 +173,39 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
+    <configuration name="MealPlanner [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Gradle.FoodTracker [clean]" />
+      <item itemvalue="Gradle.FoodTracker [jar]" />
+      <item itemvalue="Gradle.FoodTracker [run]" />
+      <item itemvalue="Gradle.MealPlanner [build]" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.FoodTracker [run]" />
-        <item itemvalue="Gradle.FoodTracker [jar]" />
         <item itemvalue="Gradle.FoodTracker [clean]" />
+        <item itemvalue="Gradle.MealPlanner [build]" />
+        <item itemvalue="Gradle.FoodTracker [jar]" />
       </list>
     </recent_temporary>
   </component>
@@ -156,5 +219,9 @@
       <updated>1694962599728</updated>
     </task>
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="initial commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="initial commit" />
   </component>
 </project>

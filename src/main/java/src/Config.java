@@ -2,7 +2,6 @@ package src;
 
 public class Config {
 
-    private String title = "Food Tracker";
     private int initialHeight = 600;
     private int initialWidth = 800;
 
@@ -20,14 +19,6 @@ public class Config {
 
     public void setInitialWidth(int initialWidth) {
         this.initialWidth = initialWidth;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
 }

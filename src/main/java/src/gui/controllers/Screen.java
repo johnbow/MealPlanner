@@ -1,11 +1,13 @@
 package src.gui.controllers;
 
+import src.gui.GUI;
 import src.gui.controllers.*;
 
 import java.lang.reflect.InvocationTargetException;
 
 public enum Screen {
-    CALENDAR("CalendarScreen.fxml", "CalendarScreen.css", CalendarController.class);
+    CALENDAR("CalendarScreen.fxml", "CalendarScreen.css", CalendarController.class),
+    RECIPE("RecipeScreen.fxml", "RecipeScreen.css", RecipeController.class);
 
 
     private final String filename;
@@ -21,9 +23,10 @@ public enum Screen {
         return filename;
     }
 
-    public Controller instantiateController() {
+    public Controller instantiateController(GUI gui) {
         try {
             Controller controller = controllerClass.getDeclaredConstructor().newInstance();
+            controller.setGUI(gui);
             controller.setFilename(filename);
             controller.setStylesheet(stylesheet);
             return controller;

@@ -26,6 +26,7 @@ public class Calendar extends GridPane {
         setGridLinesVisible(true);
         getRowConstraints().add(new RowConstraints());
         RowConstraints row = new RowConstraints();
+        row.setMinHeight(100.0);
         row.setFillHeight(true);
         row.setVgrow(Priority.ALWAYS);
         getRowConstraints().add(row);

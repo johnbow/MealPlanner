@@ -1,5 +1,6 @@
 package src.gui.controllers;
 
+import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -18,8 +19,10 @@ public class CalendarController extends Controller {
 
     @FXML
     public void initialize() {
+        getGui().getStage().setTitle("Meal Planner");
         calendar.setDateLabel(dateLabel);
         calendar.setCurrentWeek();
+        addRecipeButton.requestFocus();
     }
 
     @FXML
@@ -34,6 +37,6 @@ public class CalendarController extends Controller {
 
     @FXML
     private void onAddRecipe(ActionEvent event) {
-        // TODO: open dialogue
+        getGui().loadScreen(Screen.RECIPE);
     }
 }

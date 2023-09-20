@@ -15,6 +15,7 @@ public class WeekdayBox extends VBox {
 
     public WeekdayBox() {
         setAlignment(Pos.CENTER);
+        setPrefWidth(30.0);
         dayLabel = new Label();
         dayLabel.getStyleClass().add("day-label");
         dateLabel = new Label();

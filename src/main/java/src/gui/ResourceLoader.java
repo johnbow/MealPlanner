@@ -30,16 +30,6 @@ public class ResourceLoader {
     }
 
     /**
-     * Loads fxml file from resource folder.
-     * @param filename name of the file with file extension. e.g. 'main.fxml'
-     * @return The parent loaded from the fxml file.
-     * @throws IOException if an error occurs during loading.
-     */
-    public static Parent loadFXML(String filename) throws IOException {
-        return FXMLLoader.load(Objects.requireNonNull(ResourceLoader.class.getResource(FXML_PATH + filename)));
-    }
-
-    /**
      * Loads the scene corresponding to the given controller.
      * @param controller The associated controller.
      * @return The loaded scene.
@@ -51,7 +41,7 @@ public class ResourceLoader {
         );
         fxmlLoader.setController(controller);
         Parent root = fxmlLoader.load();
-        final Scene scene = new Scene(root);
+        Scene scene = new Scene(root);
         URL stylesheetURL = null;
         if (controller.getStylesheet() != null) {
             stylesheetURL = ResourceLoader.class.getResource(CSS_PATH + controller.getStylesheet());
