@@ -6,28 +6,32 @@ public class Measure {
         SINGULAR, PLURAL
     };
 
-    private String singularName;
-    private String pluralName;
+    private final String singularName;
+    private final String pluralName;
+    private final String abbreviation;
+    private final double defaultQuantity;
 
-    public Measure(String singularName, String pluralName) {
+    public Measure(String singularName, String pluralName, String abbreviation, double defaultQuantity) {
         this.singularName = singularName;
         this.pluralName = pluralName;
+        this.abbreviation = abbreviation;
+        this.defaultQuantity = defaultQuantity;
+    }
+
+    public String getAbbreviation() {
+        return abbreviation;
+    }
+
+    public double getDefaultQuantity() {
+        return defaultQuantity;
     }
 
     public String getSingularName() {
         return singularName;
     }
 
-    public void setSingularName(String singularName) {
-        this.singularName = singularName;
-    }
-
     public String getPluralName() {
         return pluralName;
-    }
-
-    public void setPluralName(String pluralName) {
-        this.pluralName = pluralName;
     }
 
     public String getName(Measure.Number number) {

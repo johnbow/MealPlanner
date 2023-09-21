@@ -1,10 +1,7 @@
 package src;
 
 import javafx.scene.control.TextFormatter;
-import src.data.Measure;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.function.UnaryOperator;
 
 public class Config {
@@ -13,7 +10,7 @@ public class Config {
     private int initialWidth = 800;
     private final UnaryOperator<TextFormatter.Change> doubleFilter = change -> {
         String newText = change.getControlNewText();
-        if (newText.matches("([0-9]*([,.][0-9]*)?)?")) {
+        if (newText.matches("([0-9]*(\\.[0-9]*)?)?")) {
             return change;
         }
         return null;

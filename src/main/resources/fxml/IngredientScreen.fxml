@@ -23,6 +23,12 @@
             <ChoiceBox fx:id="measureBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
          </children>
       </HBox>
+      <HBox alignment="CENTER_LEFT" spacing="5.0">
+         <children>
+            <TextField fx:id="calorieField" prefColumnCount="4" promptText="100.0" />
+            <Label fx:id="calorieLabel" />
+         </children>
+      </HBox>
       <HBox alignment="CENTER">
          <children>
             <Button fx:id="addButton" mnemonicParsing="false" onAction="#onAddIngredient" text="Add" />
