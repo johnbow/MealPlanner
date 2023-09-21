@@ -52,18 +52,18 @@
                      <children>
                         <HBox>
                            <children>
-                              <TextField alignment="TOP_LEFT" promptText="Search Ingredients..." HBox.hgrow="ALWAYS" />
+                              <TextField fx:id="searchIngredientsField" alignment="TOP_LEFT" promptText="Search Ingredients..." HBox.hgrow="ALWAYS" />
                               <Button fx:id="addIngredientButton" mnemonicParsing="false" onAction="#openIngredientDialog" text="+" HBox.hgrow="NEVER" />
                            </children>
                         </HBox>
-                        <ListView fixedCellSize="3.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="100.0" prefHeight="200.0" VBox.vgrow="ALWAYS">
+                        <ListView fx:id="ingredientsList" fixedCellSize="3.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="100.0" prefHeight="200.0" VBox.vgrow="ALWAYS">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>
                         </ListView>
                      </children>
                   </VBox>
-                  <TextArea maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="100.0" promptText="Description" VBox.vgrow="ALWAYS" />
+                  <TextArea fx:id="descriptionArea" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="100.0" promptText="Description" VBox.vgrow="ALWAYS" />
                </children>
             </VBox>
             <TableView HBox.hgrow="ALWAYS">

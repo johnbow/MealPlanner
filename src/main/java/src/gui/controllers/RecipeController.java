@@ -3,15 +3,21 @@ package src.gui.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import src.data.Ingredient;
 
 public class RecipeController extends Controller {
 
-    private Stage ingredientDialog;
     @FXML private Button returnToCalendarButton;
     @FXML private Button addIngredientButton, addRecipeButton;
+    @FXML private TextField searchIngredientsField;
+    @FXML private ListView<Ingredient> ingredientsList;
+    @FXML private TextArea descriptionArea;
 
     @FXML
     public void initialize() {
@@ -21,8 +27,9 @@ public class RecipeController extends Controller {
 
     @FXML
     public void openIngredientDialog() {
-        ingredientDialog = getGui().loadDialog(Screen.INGREDIENT, StageStyle.UTILITY, Modality.WINDOW_MODAL);
-        ingredientDialog.show();
+        Controller dialog = openDialog(Screen.INGREDIENT, StageStyle.UTILITY, Modality.WINDOW_MODAL);
+        IngredientController ingredientController = (IngredientController) dialog;
+        ingredientController.setIngredientName(searchIngredientsField.getText());
     }
 
     @FXML

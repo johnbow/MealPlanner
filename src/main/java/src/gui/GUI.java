@@ -1,11 +1,11 @@
 package src.gui;
 
-import javafx.beans.value.ChangeListener;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import src.Config;
+import src.data.Database;
 import src.gui.controllers.Controller;
 import src.gui.controllers.Screen;
 
@@ -15,12 +15,14 @@ public class GUI {
 
     private Stage stage;
     private Config config;
+    private Database database;
     private Controller controller;
     private Screen currentScreen;
 
-    public GUI(Stage stage, Config config) {
+    public GUI(Stage stage, Config config, Database database) {
         this.stage = stage;
         this.config = config;
+        this.database = database;
         this.currentScreen = null;
     }
 
@@ -33,10 +35,14 @@ public class GUI {
 
     public void loadScreen(Screen screen) {
         try {
-            controller = screen.instantiateController(this);
-            Scene scene = ResourceLoader.loadScene(controller);
+            if (controller != null)
+                controller.closeAllDialogs();
+            Controller newController = screen.instantiateController(this);
+            Scene scene = ResourceLoader.loadScene(newController);
             stage.setScene(scene);
+            newController.setStage(stage);
             forceRefresh();
+            controller = newController;
             currentScreen = screen;
         } catch (IOException e) {
             System.err.printf("Failed loading scene %s\n", screen.getFilename());
@@ -44,18 +50,19 @@ public class GUI {
         }
     }
 
-    public Stage loadDialog(Screen screen, StageStyle stageStyle, Modality modality) {
+    public Controller loadDialog(Screen screen, StageStyle stageStyle, Modality modality) {
         try {
             Controller dialogController = screen.instantiateController(this);
+            dialogController.setDialog(true);
             Scene scene = ResourceLoader.loadScene(dialogController);
             Stage dialog = new Stage(stageStyle);
             dialog.initModality(modality);
             dialog.initOwner(stage);
             dialog.setScene(scene);
-            dialog.show();
-            return dialog;
+            dialogController.setStage(dialog);
+            return dialogController;
         } catch (IOException e) {
-            System.err.printf("Failed loading scene %s\n", screen.getFilename());
+            System.err.printf("Failed loading dialog %s\n", screen.getFilename());
             e.printStackTrace();
         }
         return null;
@@ -63,6 +70,18 @@ public class GUI {
 
     public Stage getStage() {
         return stage;
+    }
+
+    public Config getConfig() {
+        return config;
+    }
+
+    public Controller getController() {
+        return controller;
+    }
+
+    public Database getDatabase() {
+        return database;
     }
 
     private void forceRefresh() {

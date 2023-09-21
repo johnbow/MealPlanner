@@ -12,4 +12,5 @@ module src {
     opens src.gui.controllers to javafx.fxml;
     exports src.gui.components;
     opens src.gui.components to javafx.fxml;
+    exports src.data;
 }
