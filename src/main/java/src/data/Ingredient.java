@@ -1,51 +1,25 @@
 package src.data;
 
-public class Ingredient {
+public record Ingredient (
+        String name,
+        Measure measure,
+        double measureSize,
+        double caloriesPerMeasureSize,
+        int macroTypeInfo,
+        double carbs,
+        double fat,
+        double protein
+) {
 
-    private final String name;
-    private final Measure measure;
-    private final double measureSize;
-    private final double caloriesPerMeasureSize;
-
-    // optional values:
-    private final boolean macrosInPercent;    // whether
-    private final double carbs, fat, protein;
+    public static final int MACROS_NOT_SPECIFIED = 0;
+    public static final int MACROS_IN_ABSOLUTE_UNITS = 1;
+    public static final int MACROS_IN_PERCENT = 2;
 
     public Ingredient(String name, Measure measure, double measureSize, double caloriesPerMeasureSize) {
-        this.name = name;
-        this.measure = measure;
-        this.measureSize = measureSize;
-        this.caloriesPerMeasureSize = caloriesPerMeasureSize;
-
-        this.macrosInPercent = false;
-        this.carbs = 0.0;
-        this.fat = 0.0;
-        this.protein = 0.0;
+        this(name, measure, measureSize, caloriesPerMeasureSize, MACROS_NOT_SPECIFIED, 0.0, 0.0, 0.0);
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public Measure getMeasure() {
-        return measure;
-    }
-
-    public double getMeasureSize() {
-        return measureSize;
-    }
-
-    public double getCaloriesPerMeasureSize() {
-        return caloriesPerMeasureSize;
-    }
-
-    public double getCalories(double quantity, Measure otherMeasure) {
+    public double calories(double quantity, Measure otherMeasure) {
         return caloriesPerMeasureSize / measureSize * quantity;
-    }
-
-    @Override
-    public String toString() {
-        return getName() + "(PortionSize=" + String.valueOf(measureSize)
-                + measure.getNameByQuantity(measureSize) + ", calories=" + caloriesPerMeasureSize + "kcal)";
     }
 }

@@ -43,14 +43,14 @@ public class Database {
     private void insertMeasures(List<Measure> measures) {
         try (
                 Connection con = DriverManager.getConnection(dbURL);
-                PreparedStatement pstmt = con.prepareStatement(SQLStatements.INSERT_MEASURES)
+                PreparedStatement pstmt = con.prepareStatement(SQLStatements.INSERT_MEASURE)
         ) {
             con.setAutoCommit(false);
             for (Measure measure : measures) {
-                pstmt.setString(1, measure.getSingularName());
-                pstmt.setString(2, measure.getPluralName());
-                pstmt.setString(3, measure.getAbbreviation());
-                pstmt.setDouble(4, measure.getDefaultQuantity());
+                pstmt.setString(1, measure.singularName());
+                pstmt.setString(2, measure.pluralName());
+                pstmt.setString(3, measure.abbreviation());
+                pstmt.setDouble(4, measure.defaultQuantity());
                 pstmt.executeUpdate();
                 System.out.println("Added " + measure.toString() + " to database!");
             }
@@ -69,10 +69,10 @@ public class Database {
         ) {
             while (rs.next()) {
                 measures.add(new Measure(
-                        rs.getString("singular_name"),
-                        rs.getString("plural_name"),
-                        rs.getString("abbreviation"),
-                        rs.getDouble("default_quantity")
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getDouble(4)
                 ));
             }
         } catch (SQLException e) {
@@ -81,10 +81,28 @@ public class Database {
         return measures;
     }
 
-    public boolean addIngredient(Ingredient ingredient) {
+    public boolean insertIngredient(Ingredient ingredient) {
+        try (
+                Connection con = DriverManager.getConnection(dbURL);
+                PreparedStatement pstmt = con.prepareStatement(SQLStatements.INSERT_INGREDIENT)
+        ) {
+            con.setAutoCommit(false);
+            pstmt.setString(1, ingredient.name());
+            pstmt.setString(2, ingredient.measure().singularName());
+            pstmt.setDouble(3, ingredient.measureSize());
+            pstmt.setDouble(4, ingredient.caloriesPerMeasureSize());
+            pstmt.setInt(5, ingredient.macroTypeInfo());
+            pstmt.setDouble(6, ingredient.carbs());
+            pstmt.setDouble(7, ingredient.fat());
+            pstmt.setDouble(8, ingredient.protein());
+            pstmt.executeUpdate();
+            con.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
         System.out.printf("Added %s to database.\n", ingredient.toString());
-        // TODO: implement
-        return true;    // return whether ingredient can be added
+        return true;
     }
 
 }

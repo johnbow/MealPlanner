@@ -1,8 +1,6 @@
 package src.gui.controllers;
 
 import javafx.concurrent.Task;
-import javafx.concurrent.WorkerStateEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.util.StringConverter;
@@ -28,7 +26,7 @@ public class IngredientController extends Controller {
     @FXML private TextField calorieField;
     @FXML private ChoiceBox<Measure> measureBox;
     @FXML private Button addButton;
-    @FXML private Label calorieLabel;
+    @FXML private Label calorieLabel, errorLabel;
 
     @FXML
     public void initialize() {
@@ -44,7 +42,7 @@ public class IngredientController extends Controller {
         if (calorieField.getText().isBlank() || quantityField.getText().isBlank() || nameField.getText().isBlank())
             return;
         // TODO: check if ingredient name is not already present
-        boolean isValid = getGui().getDatabase().addIngredient(new Ingredient(
+        boolean isValid = getGui().getDatabase().insertIngredient(new Ingredient(
                 nameField.getText(),
                 measureBox.getValue(),
                 Double.parseDouble(quantityField.getText()),
@@ -96,9 +94,9 @@ public class IngredientController extends Controller {
     private void setMeasureBoxListeners() {
         measureBox.getSelectionModel().selectedIndexProperty().addListener((observableValue, number, number2) -> {
             Measure selected = measureBox.getItems().get((Integer) number2);
-            String defaultQuantity = String.valueOf(selected.getDefaultQuantity());
+            String defaultQuantity = String.valueOf(selected.defaultQuantity());
             quantityField.setText(defaultQuantity);
-            updateCalorieLabel(defaultQuantity, selected.getNameByQuantity(selected.getDefaultQuantity()));
+            updateCalorieLabel(defaultQuantity, selected.getNameByQuantity(selected.defaultQuantity()));
         });
     }
 
@@ -123,7 +121,6 @@ public class IngredientController extends Controller {
     }
 
     private void setLoadMeasuresTaskListeners() {
-        System.out.println("Called!");
         loadMeasuresTask.setOnSucceeded(t -> {
             final List<Measure> measures = loadMeasuresTask.getValue();
             measureBox.getItems().addAll(measures);

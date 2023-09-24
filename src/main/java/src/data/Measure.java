@@ -1,51 +1,23 @@
 package src.data;
 
-public class Measure {
+public record Measure(String singularName, String pluralName, String abbreviation, double defaultQuantity) {
 
     public enum Number {
         SINGULAR, PLURAL
     };
 
-    private final String singularName;
-    private final String pluralName;
-    private final String abbreviation;
-    private final double defaultQuantity;
-
-    public Measure(String singularName, String pluralName, String abbreviation, double defaultQuantity) {
-        this.singularName = singularName;
-        this.pluralName = pluralName;
-        this.abbreviation = abbreviation;
-        this.defaultQuantity = defaultQuantity;
-    }
-
-    public String getAbbreviation() {
-        return abbreviation;
-    }
-
-    public double getDefaultQuantity() {
-        return defaultQuantity;
-    }
-
-    public String getSingularName() {
-        return singularName;
-    }
-
-    public String getPluralName() {
-        return pluralName;
-    }
-
     public String getName(Measure.Number number) {
-        return number == Number.SINGULAR ? getSingularName() : getPluralName();
+        return number == Number.SINGULAR ? singularName() : pluralName();
     }
 
-    public String getNameByQuantity(double quantity)  {
+    public String getNameByQuantity(double quantity) {
         return Math.abs(quantity - 1.0) < 0.0001 ?
-                getSingularName() : getPluralName();
+                singularName() : pluralName();
     }
 
     @Override
     public String toString() {
         return String.format("Measure(%s, %s, %s, %f)",
-                getSingularName(), getPluralName(), getAbbreviation(), getDefaultQuantity());
+                singularName(), pluralName(), abbreviation(), defaultQuantity());
     }
 }

@@ -22,17 +22,27 @@ public final class SQLStatements {
                 measure_name VARCHAR(256) NOT NULL,
                 measure_size REAL NOT NULL,
                 calories_per_measure_size REAL NOT NULL,
-                carbs REAL DEFAULT NULL,
-                fat REAL DEFAULT NULL,
-                protein REAL DEFAULT NULL,
+                
+                macro_type_info INT NOT NULL DEFAULT 0
+                CHECK ( macro_type_info IN (0, 1, 2) ),
+                carbs REAL NOT NULL DEFAULT 0.0,
+                fat REAL NOT NULL DEFAULT 0.0,
+                protein REAL NOT NULL DEFAULT 0.0,
                 
                 FOREIGN KEY (measure_name) REFERENCES Measures (singular_name)
             );
             """;
 
-    static final String INSERT_MEASURES =
+    static final String INSERT_MEASURE =
             """
-            INSERT INTO Measures(singular_name, plural_name, abbreviation, default_quantity) VALUES (?,?,?,?);
+            INSERT INTO Measures(singular_name, plural_name, abbreviation, default_quantity)
+            VALUES (?,?,?,?);
+            """;
+
+    static final String INSERT_INGREDIENT =
+            """
+            INSERT INTO Ingredients(name, measure_name, measure_size, calories_per_measure_size, macro_type_info, carbs, fat, protein)
+            VALUES (?,?,?,?,?,?,?,?);
             """;
 
 

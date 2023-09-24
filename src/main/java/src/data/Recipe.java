@@ -1,7 +1,5 @@
 package src.data;
 
-public class Recipe {
-
-
+public record Recipe () {
 
 }
