@@ -8,15 +8,14 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class MainApp extends Application {
-    private GUI gui;
 
     @Override
     public void start(Stage stage) throws IOException {
-        Config config = new Config();
+        Config config = Config.loadConfig();
         Database database = new Database();
-        gui = new GUI(stage, config, database);
+        GUI gui = new GUI(stage, config, database);
         gui.loadApplication();
-
+        database.loadUserData(config);
     }
 
     @Override

@@ -3,6 +3,9 @@ module src {
     requires javafx.fxml;
 
     requires org.controlsfx.controls;
+    requires net.harawata.appdirs;
+    requires java.sql;
+    requires org.xerial.sqlitejdbc;
 
     opens src to javafx.fxml;
     exports src;

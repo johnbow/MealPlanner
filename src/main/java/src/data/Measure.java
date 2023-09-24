@@ -42,4 +42,10 @@ public class Measure {
         return Math.abs(quantity - 1.0) < 0.0001 ?
                 getSingularName() : getPluralName();
     }
+
+    @Override
+    public String toString() {
+        return String.format("Measure(%s, %s, %s, %f)",
+                getSingularName(), getPluralName(), getAbbreviation(), getDefaultQuantity());
+    }
 }

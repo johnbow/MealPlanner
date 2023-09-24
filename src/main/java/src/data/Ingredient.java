@@ -6,14 +6,21 @@ public class Ingredient {
     private final Measure measure;
     private final double measureSize;
     private final double caloriesPerMeasureSize;
-    private double quantity;    // quantity per measure
+
+    // optional values:
+    private final boolean macrosInPercent;    // whether
+    private final double carbs, fat, protein;
 
     public Ingredient(String name, Measure measure, double measureSize, double caloriesPerMeasureSize) {
         this.name = name;
         this.measure = measure;
         this.measureSize = measureSize;
         this.caloriesPerMeasureSize = caloriesPerMeasureSize;
-        this.quantity = measureSize;
+
+        this.macrosInPercent = false;
+        this.carbs = 0.0;
+        this.fat = 0.0;
+        this.protein = 0.0;
     }
 
     public String getName() {
@@ -32,16 +39,8 @@ public class Ingredient {
         return caloriesPerMeasureSize;
     }
 
-    public double getCalories() {
-        return quantity * caloriesPerMeasureSize / measureSize;
-    }
-
-    public double getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(double quantity) {
-        this.quantity = quantity;
+    public double getCalories(double quantity, Measure otherMeasure) {
+        return caloriesPerMeasureSize / measureSize * quantity;
     }
 
     @Override

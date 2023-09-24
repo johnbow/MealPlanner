@@ -1,5 +1,8 @@
 package src.gui.controllers;
 
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.util.StringConverter;
@@ -7,9 +10,18 @@ import javafx.util.converter.DoubleStringConverter;
 import src.data.Ingredient;
 import src.data.Measure;
 
+import java.util.List;
+
 public class IngredientController extends Controller {
     private Measure.Number measureNumber = Measure.Number.PLURAL;
     private final String calorieFormatString = "kcal per %s %s";
+
+    private Task<List<Measure>> loadMeasuresTask = new Task<>() {
+        @Override protected List<Measure> call() {
+            return getGui().getDatabase().getMeasures();
+        }
+    };
+    private Thread loadMeasuresThread = new Thread(loadMeasuresTask);
 
     @FXML private TextField nameField;
     @FXML private TextField quantityField;
@@ -20,30 +32,11 @@ public class IngredientController extends Controller {
 
     @FXML
     public void initialize() {
-        measureBox.getItems().addAll(getGui().getDatabase().getMeasures());
-        measureBox.getSelectionModel().selectedIndexProperty().addListener((observableValue, number, number2) -> {
-            Measure selected = measureBox.getItems().get((Integer) number2);
-            String defaultQuantity = String.valueOf(selected.getDefaultQuantity());
-            quantityField.setText(defaultQuantity);
-            updateCalorieLabel(defaultQuantity, selected.getNameByQuantity(selected.getDefaultQuantity()));
-        });
-        quantityField.setTextFormatter(new TextFormatter<Double>(
-                new DoubleStringConverter(), 0.0, getGui().getConfig().getDoubleFilter()));
+        setMeasureBoxListeners();
         setMeasureNumber(measureNumber);
-        quantityField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.isBlank()) return;
-            Measure.Number oldMeasureNumber = measureNumber;
-            if (Math.abs(Double.parseDouble(newValue) - 1.0) < 0.0001)
-                measureNumber = Measure.Number.SINGULAR;
-            else
-                measureNumber = Measure.Number.PLURAL;
-            if (measureNumber != oldMeasureNumber)
-                setMeasureNumber(measureNumber);
-            if (measureBox.getValue() != null)
-                updateCalorieLabel(newValue, measureBox.getValue().getName(measureNumber));
-        });
-        measureBox.getSelectionModel().selectFirst();
-        updateCalorieLabel(quantityField.getText(), measureBox.getValue().getName(measureNumber));
+        setQuantityFieldListeners();
+        setLoadMeasuresTaskListeners();
+        loadMeasures();
     }
 
     @FXML
@@ -51,13 +44,14 @@ public class IngredientController extends Controller {
         if (calorieField.getText().isBlank() || quantityField.getText().isBlank() || nameField.getText().isBlank())
             return;
         // TODO: check if ingredient name is not already present
-        getGui().getDatabase().addIngredient(new Ingredient(
+        boolean isValid = getGui().getDatabase().addIngredient(new Ingredient(
                 nameField.getText(),
                 measureBox.getValue(),
                 Double.parseDouble(quantityField.getText()),
                 Double.parseDouble(calorieField.getText())
         ));
-        closeThisDialog();
+        if (isValid)
+            closeThisDialog();
     }
 
     /**
@@ -82,12 +76,60 @@ public class IngredientController extends Controller {
         });
     }
 
+    private void loadMeasures() {
+        if (loadMeasuresThread.isAlive())
+            return;
+        loadMeasuresThread.start();
+    }
+
     private void updateCalorieLabel(String quantity, String measure) {
         calorieLabel.setText(String.format(calorieFormatString, quantity, measure));
     }
 
     public void setIngredientName(String text) {
         nameField.setText(text);
+    }
+
+    /**
+     * Sets the selectionListener property of the measureBox.
+     */
+    private void setMeasureBoxListeners() {
+        measureBox.getSelectionModel().selectedIndexProperty().addListener((observableValue, number, number2) -> {
+            Measure selected = measureBox.getItems().get((Integer) number2);
+            String defaultQuantity = String.valueOf(selected.getDefaultQuantity());
+            quantityField.setText(defaultQuantity);
+            updateCalorieLabel(defaultQuantity, selected.getNameByQuantity(selected.getDefaultQuantity()));
+        });
+    }
+
+    /**
+     * Sets the TextFormatter and textProperty listener of the quantityField.
+     */
+    private void setQuantityFieldListeners() {
+        quantityField.setTextFormatter(new TextFormatter<Double>(
+                new DoubleStringConverter(), 0.0, getGui().getConfig().getDoubleFilter()));
+        quantityField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.isBlank()) return;
+            Measure.Number oldMeasureNumber = measureNumber;
+            if (Math.abs(Double.parseDouble(newValue) - 1.0) < 0.0001)
+                measureNumber = Measure.Number.SINGULAR;
+            else
+                measureNumber = Measure.Number.PLURAL;
+            if (measureNumber != oldMeasureNumber)
+                setMeasureNumber(measureNumber);
+            if (measureBox.getValue() != null)
+                updateCalorieLabel(newValue, measureBox.getValue().getName(measureNumber));
+        });
+    }
+
+    private void setLoadMeasuresTaskListeners() {
+        System.out.println("Called!");
+        loadMeasuresTask.setOnSucceeded(t -> {
+            final List<Measure> measures = loadMeasuresTask.getValue();
+            measureBox.getItems().addAll(measures);
+            measureBox.getSelectionModel().selectFirst();
+            updateCalorieLabel(quantityField.getText(), measureBox.getValue().getName(measureNumber));
+        });
     }
 
 
