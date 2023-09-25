@@ -5,12 +5,14 @@ public final class SQLStatements {
 
     static final String DROP_INGREDIENTS = "DROP TABLE IF EXISTS Ingredients";
 
+    static final String DROP_RECIPE_INFO = "DROP TABLE IF EXISTS Recipe_Info";
+
     static final String CREATE_MEASURES =
             """
             CREATE TABLE IF NOT EXISTS Measures (
-                singular_name VARCHAR(256) PRIMARY KEY NOT NULL,
-                plural_name VARCHAR(256) NOT NULL UNIQUE,
-                abbreviation VARCHAR(32) NOT NULL,
+                singular_name VARCHAR(255) PRIMARY KEY NOT NULL,
+                plural_name VARCHAR(255) NOT NULL UNIQUE,
+                abbreviation VARCHAR(15) NOT NULL,
                 default_quantity REAL NOT NULL
             );
             """;
@@ -18,18 +20,35 @@ public final class SQLStatements {
     static final String CREATE_INGREDIENTS =
             """
             CREATE TABLE IF NOT EXISTS Ingredients (
-                name VARCHAR(256) PRIMARY KEY NOT NULL,
-                measure_name VARCHAR(256) NOT NULL,
-                measure_size REAL NOT NULL,
-                calories_per_measure_size REAL NOT NULL,
+                name VARCHAR(255) PRIMARY KEY NOT NULL,
+                measure_name VARCHAR(255) NOT NULL,
+                measure_size REAL NOT NULL
+                CHECK ( measure_size > 0.0 ),
+                calories_per_measure_size REAL NOT NULL
+                CHECK ( calories_per_measure_size >= 0.0 ),
                 
                 macro_type_info INT NOT NULL DEFAULT 0
                 CHECK ( macro_type_info IN (0, 1, 2) ),
-                carbs REAL NOT NULL DEFAULT 0.0,
-                fat REAL NOT NULL DEFAULT 0.0,
-                protein REAL NOT NULL DEFAULT 0.0,
+                carbs REAL NOT NULL DEFAULT 0.0
+                CHECK ( carbs >= 0.0 ),
+                fat REAL NOT NULL DEFAULT 0.0
+                CHECK ( fat >= 0.0 ),
+                protein REAL NOT NULL DEFAULT 0.0
+                CHECK ( protein >= 0.0 ),
                 
                 FOREIGN KEY (measure_name) REFERENCES Measures (singular_name)
+            );
+            """;
+
+    static final String CREATE_RECIPE_INFO =
+            """
+            CREATE TABLE IF NOT EXISTS Recipe_Info (
+                name VARCHAR(255) PRIMARY KEY NOT NULL,
+                filename VARCHAR(255) UNIQUE NOT NULL,
+                servings INT NOT NULL DEFAULT 1
+                CHECK ( servings > 0 ),
+                total_calories REAL NOT NULL
+                CHECK (total_calories >= 0.0)
             );
             """;
 
@@ -43,6 +62,12 @@ public final class SQLStatements {
             """
             INSERT INTO Ingredients(name, measure_name, measure_size, calories_per_measure_size, macro_type_info, carbs, fat, protein)
             VALUES (?,?,?,?,?,?,?,?);
+            """;
+
+    static final String INSERT_RECIPE_INFO =
+            """
+            INSERT INTO Recipe_Info(name, filename, servings, total_calories)
+            VALUES (?,?,?,?);
             """;
 
 

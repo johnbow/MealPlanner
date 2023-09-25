@@ -33,6 +33,8 @@ public class Database {
             stmt.execute(SQLStatements.CREATE_MEASURES);
             stmt.execute(SQLStatements.DROP_INGREDIENTS);
             stmt.execute(SQLStatements.CREATE_INGREDIENTS);
+            stmt.execute(SQLStatements.DROP_RECIPE_INFO);
+            stmt.execute(SQLStatements.CREATE_RECIPE_INFO);
             con.commit();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -40,7 +42,7 @@ public class Database {
         System.out.println("Created tables.");
     }
 
-    private void insertMeasures(List<Measure> measures) {
+    private boolean insertMeasures(List<Measure> measures) {
         try (
                 Connection con = DriverManager.getConnection(dbURL);
                 PreparedStatement pstmt = con.prepareStatement(SQLStatements.INSERT_MEASURE)
@@ -52,33 +54,15 @@ public class Database {
                 pstmt.setString(3, measure.abbreviation());
                 pstmt.setDouble(4, measure.defaultQuantity());
                 pstmt.executeUpdate();
-                System.out.println("Added " + measure.toString() + " to database!");
             }
             con.commit();
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
-    }
-
-    public List<Measure> getMeasures() {
-        List<Measure> measures = new ArrayList<>();
-        try (
-                Connection con = DriverManager.getConnection(dbURL);
-                Statement stmt  = con.createStatement();
-                ResultSet rs = stmt.executeQuery(SQLStatements.SELECT_ALL_MEASURES);
-        ) {
-            while (rs.next()) {
-                measures.add(new Measure(
-                        rs.getString(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getDouble(4)
-                ));
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return measures;
+        for (Measure measure : measures)
+            System.out.printf("Added %s to database.\n", measure.toString());
+        return true;
     }
 
     public boolean insertIngredient(Ingredient ingredient) {
@@ -103,6 +87,47 @@ public class Database {
         }
         System.out.printf("Added %s to database.\n", ingredient.toString());
         return true;
+    }
+
+    public boolean insertRecipeInfo(RecipeInfo recipeInfo) {
+        try (
+                Connection con = DriverManager.getConnection(dbURL);
+                PreparedStatement pstmt = con.prepareStatement(SQLStatements.INSERT_RECIPE_INFO)
+        ) {
+            con.setAutoCommit(false);
+            pstmt.setString(1, recipeInfo.name());
+            pstmt.setString(2, recipeInfo.filename());
+            pstmt.setInt(3, recipeInfo.servings());
+            pstmt.setDouble(4, recipeInfo.total_calories());
+            pstmt.executeUpdate();
+            con.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        System.out.printf("Added %s to database.\n", recipeInfo.toString());
+        return true;
+    }
+
+    public List<Measure> getMeasures() {
+        List<Measure> measures = new ArrayList<>();
+        try (
+                Connection con = DriverManager.getConnection(dbURL);
+                Statement stmt  = con.createStatement();
+                ResultSet rs = stmt.executeQuery(SQLStatements.SELECT_ALL_MEASURES);
+        ) {
+            while (rs.next()) {
+                measures.add(new Measure(
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getDouble(4)
+                ));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return measures;
     }
 
 }

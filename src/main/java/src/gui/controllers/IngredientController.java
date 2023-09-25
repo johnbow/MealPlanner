@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.util.StringConverter;
 import javafx.util.converter.DoubleStringConverter;
+import src.Config;
 import src.data.Ingredient;
 import src.data.Measure;
 
@@ -22,7 +23,7 @@ public class IngredientController extends Controller {
     private Thread loadMeasuresThread = new Thread(loadMeasuresTask);
 
     @FXML private TextField nameField;
-    @FXML private TextField quantityField;
+    @FXML private TextField measureSizeField;
     @FXML private TextField calorieField;
     @FXML private ChoiceBox<Measure> measureBox;
     @FXML private Button addButton;
@@ -32,20 +33,20 @@ public class IngredientController extends Controller {
     public void initialize() {
         setMeasureBoxListeners();
         setMeasureNumber(measureNumber);
-        setQuantityFieldListeners();
+        setMeasureSizeFieldListeners();
         setLoadMeasuresTaskListeners();
         loadMeasures();
     }
 
     @FXML
     private void onAddIngredient() {
-        if (calorieField.getText().isBlank() || quantityField.getText().isBlank() || nameField.getText().isBlank())
+        if (calorieField.getText().isBlank() || measureSizeField.getText().isBlank() || nameField.getText().isBlank())
             return;
         // TODO: check if ingredient name is not already present
         boolean isValid = getGui().getDatabase().insertIngredient(new Ingredient(
                 nameField.getText(),
                 measureBox.getValue(),
-                Double.parseDouble(quantityField.getText()),
+                Double.parseDouble(measureSizeField.getText()),
                 Double.parseDouble(calorieField.getText())
         ));
         if (isValid)
@@ -95,7 +96,7 @@ public class IngredientController extends Controller {
         measureBox.getSelectionModel().selectedIndexProperty().addListener((observableValue, number, number2) -> {
             Measure selected = measureBox.getItems().get((Integer) number2);
             String defaultQuantity = String.valueOf(selected.defaultQuantity());
-            quantityField.setText(defaultQuantity);
+            measureSizeField.setText(defaultQuantity);
             updateCalorieLabel(defaultQuantity, selected.getNameByQuantity(selected.defaultQuantity()));
         });
     }
@@ -103,10 +104,10 @@ public class IngredientController extends Controller {
     /**
      * Sets the TextFormatter and textProperty listener of the quantityField.
      */
-    private void setQuantityFieldListeners() {
-        quantityField.setTextFormatter(new TextFormatter<Double>(
-                new DoubleStringConverter(), 0.0, getGui().getConfig().getDoubleFilter()));
-        quantityField.textProperty().addListener((observable, oldValue, newValue) -> {
+    private void setMeasureSizeFieldListeners() {
+        measureSizeField.setTextFormatter(new TextFormatter<Double>(
+                new DoubleStringConverter(), 0.0, Config.DOUBLE_FILTER));
+        measureSizeField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.isBlank()) return;
             Measure.Number oldMeasureNumber = measureNumber;
             if (Math.abs(Double.parseDouble(newValue) - 1.0) < 0.0001)
@@ -125,7 +126,7 @@ public class IngredientController extends Controller {
             final List<Measure> measures = loadMeasuresTask.getValue();
             measureBox.getItems().addAll(measures);
             measureBox.getSelectionModel().selectFirst();
-            updateCalorieLabel(quantityField.getText(), measureBox.getValue().getName(measureNumber));
+            updateCalorieLabel(measureSizeField.getText(), measureBox.getValue().getName(measureNumber));
         });
     }
 

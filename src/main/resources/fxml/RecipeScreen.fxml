@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="20.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/">
+<VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="20.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox alignment="CENTER_LEFT">
          <children>
@@ -24,7 +24,7 @@
       </HBox>
       <HBox alignment="CENTER" VBox.vgrow="NEVER">
          <children>
-            <TextField prefColumnCount="30" promptText="Recipe Name">
+            <TextField fx:id="nameField" prefColumnCount="30" promptText="Recipe Name">
                <HBox.margin>
                   <Insets right="30.0" />
                </HBox.margin>
@@ -36,7 +36,7 @@
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField maxHeight="25.0" maxWidth="25.0" prefHeight="25.0" prefWidth="25.0" promptText="1" />
+                  <TextField fx:id="servingsField" alignment="CENTER_RIGHT" prefWidth="30.0" promptText="1" />
                </children>
             </HBox>
          </children>

@@ -15,7 +15,14 @@ public class Config {
     private int initialHeight = 600;
     private int initialWidth = 800;
     private String userDataDirectory = "";
-    private final UnaryOperator<TextFormatter.Change> doubleFilter = change -> {
+    public static final UnaryOperator<TextFormatter.Change> INT_FILTER_2_PLACES = change -> {
+        String newText = change.getControlNewText();
+        if (newText.matches("\\d{0,2}")) {
+            return change;
+        }
+        return null;
+    };
+    public static final UnaryOperator<TextFormatter.Change> DOUBLE_FILTER = change -> {
         String newText = change.getControlNewText();
         if (newText.matches("([0-9]*(\\.[0-9]{0,6})?)?")) {
             return change;
@@ -60,10 +67,6 @@ public class Config {
 
     public void setInitialWidth(int initialWidth) {
         this.initialWidth = initialWidth;
-    }
-
-    public UnaryOperator<TextFormatter.Change> getDoubleFilter() {
-        return doubleFilter;
     }
 
 }
