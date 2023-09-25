@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.util.StringConverter;
 import javafx.util.converter.DoubleStringConverter;
-import src.Config;
+import src.data.Config;
 import src.data.Ingredient;
 import src.data.Measure;
 

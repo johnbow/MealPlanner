@@ -75,4 +75,9 @@ public final class SQLStatements {
             """
             SELECT * FROM Measures;
             """;
+
+    static final String EXISTS_ANY_MEASURE =
+            """
+            SELECT COUNT(*) FROM (SELECT 0 FROM Measures LIMIT 1);
+            """;
 }

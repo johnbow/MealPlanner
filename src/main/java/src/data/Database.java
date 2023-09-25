@@ -1,7 +1,5 @@
 package src.data;
 
-import src.Config;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,7 +17,7 @@ public class Database {
     );
 
     public void loadUserData(Config config) {
-        dbURL = "jdbc:sqlite:" + config.getUserDataDirectory() + Config.DATABASE_FILE;
+        dbURL = "jdbc:sqlite:" + config.getDataDirectory() + Config.DATABASE_FILE;
         createTables();
         insertMeasures(DEFAULT_MEASURES);
     }
@@ -29,11 +27,13 @@ public class Database {
                 Statement stmt = con.createStatement()
         ) {
             con.setAutoCommit(false);
-            stmt.execute(SQLStatements.DROP_MEASURES);
+            if (Config.DO_CLEAN_INSTALL) {
+                stmt.execute(SQLStatements.DROP_MEASURES);
+                stmt.execute(SQLStatements.DROP_RECIPE_INFO);
+                stmt.execute(SQLStatements.DROP_INGREDIENTS);
+            }
             stmt.execute(SQLStatements.CREATE_MEASURES);
-            stmt.execute(SQLStatements.DROP_INGREDIENTS);
             stmt.execute(SQLStatements.CREATE_INGREDIENTS);
-            stmt.execute(SQLStatements.DROP_RECIPE_INFO);
             stmt.execute(SQLStatements.CREATE_RECIPE_INFO);
             con.commit();
         } catch (SQLException e) {
@@ -45,8 +45,16 @@ public class Database {
     private boolean insertMeasures(List<Measure> measures) {
         try (
                 Connection con = DriverManager.getConnection(dbURL);
+                Statement stmt = con.createStatement();
+                ResultSet rs = stmt.executeQuery(SQLStatements.EXISTS_ANY_MEASURE);
                 PreparedStatement pstmt = con.prepareStatement(SQLStatements.INSERT_MEASURE)
         ) {
+            // Check if any measure exists:
+            if (!rs.next() || rs.getBoolean(1)) {
+                System.out.println("There are already measures in the database.");
+                return false;
+            }
+
             con.setAutoCommit(false);
             for (Measure measure : measures) {
                 pstmt.setString(1, measure.singularName());
@@ -106,6 +114,10 @@ public class Database {
             return false;
         }
         System.out.printf("Added %s to database.\n", recipeInfo.toString());
+        return true;
+    }
+
+    public boolean removeRecipeInfo(RecipeInfo recipeInfo) {
         return true;
     }
 

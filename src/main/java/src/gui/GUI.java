@@ -4,8 +4,9 @@ import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import src.Config;
+import src.data.Config;
 import src.data.Database;
+import src.data.JSONLoader;
 import src.gui.controllers.Controller;
 import src.gui.controllers.Screen;
 

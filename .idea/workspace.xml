@@ -5,15 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4c0eac42-ae49-4629-a0fe-4ef6521f7fba" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/src/data/RecipeInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/src/data/JSONLoader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/src/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/Config.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/data/Config.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/MainApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/MainApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/src/data/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/data/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/src/data/Recipe.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/data/Recipe.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/src/data/SQLStatements.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/data/SQLStatements.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/GUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/controllers/IngredientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/controllers/IngredientController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/controllers/RecipeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/controllers/RecipeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/RecipeScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/RecipeScreen.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/IngredientScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/IngredientScreen.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,6 +71,7 @@
         <option value="Enum" />
         <option value="FxmlFile" />
         <option value="Class" />
+        <option value="Record" />
       </list>
     </option>
   </component>
@@ -273,7 +277,14 @@
       <option name="project" value="LOCAL" />
       <updated>1695559352128</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="recipe info can now be added to database">
+      <created>1695650446115</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1695650446115</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -284,6 +295,7 @@
     <MESSAGE value="added calorie tracker to ingredients" />
     <MESSAGE value="added database support for Measures" />
     <MESSAGE value="ingredients can now be added to database" />
-    <option name="LAST_COMMIT_MESSAGE" value="ingredients can now be added to database" />
+    <MESSAGE value="recipe info can now be added to database" />
+    <option name="LAST_COMMIT_MESSAGE" value="recipe info can now be added to database" />
   </component>
 </project>

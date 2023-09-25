@@ -6,9 +6,13 @@ import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.StageStyle;
 import javafx.util.converter.IntegerStringConverter;
-import src.Config;
+import src.data.Config;
 import src.data.Ingredient;
+import src.data.Recipe;
 import src.data.RecipeInfo;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RecipeController extends Controller {
 
@@ -42,13 +46,32 @@ public class RecipeController extends Controller {
     private void onAddRecipe(ActionEvent event) {
         String name = nameField.getText();
         String servingsStr = servingsField.getText();
-        if (name.isBlank() || servingsStr.isBlank())
+        List<Ingredient> ingredients = getIngredients();
+        if (name.isBlank() || servingsStr.isBlank()/* || ingredients.isEmpty()*/)
             return;
         // TODO: Calculate total_calories
-        RecipeInfo info = new RecipeInfo(name, Integer.parseInt(servingsStr), 0.0);
+        RecipeInfo info = new RecipeInfo(name, Integer.parseInt(servingsStr), calculateTotalCalories(ingredients));
+        Recipe recipe = new Recipe(info, descriptionArea.getText(), ingredients);
         boolean valid = getGui().getDatabase().insertRecipeInfo(info);
-        if (valid)
-            getGui().loadScreen(Screen.CALENDAR);
+        if (!valid) return;
+        // create file to store full recipe
+        valid = getGui().getConfig().getJsonLoader().write(recipe);
+        if (!valid) {
+            System.err.println("Recipe already exists!");
+            getGui().getDatabase().removeRecipeInfo(info);
+            return;
+        }
+        getGui().loadScreen(Screen.CALENDAR);
+    }
+
+    private List<Ingredient> getIngredients() {
+        // TODO
+        return new ArrayList<>();
+    }
+
+    private double calculateTotalCalories(List<Ingredient> ingredients) {
+        // TODO
+        return 0.d;
     }
 
 }

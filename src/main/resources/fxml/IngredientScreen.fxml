@@ -19,7 +19,7 @@
                   <Insets right="10.0" />
                </HBox.margin>
             </Label>
-            <TextField fx:id="quantityField" prefColumnCount="4" promptText="100.0" />
+            <TextField fx:id="measureSizeField" prefColumnCount="4" promptText="100.0" />
             <ChoiceBox fx:id="measureBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
          </children>
       </HBox>

@@ -6,6 +6,7 @@ module src {
     requires net.harawata.appdirs;
     requires java.sql;
     requires org.xerial.sqlitejdbc;
+    requires com.google.gson;
 
     opens src to javafx.fxml;
     exports src;
@@ -16,4 +17,5 @@ module src {
     exports src.gui.components;
     opens src.gui.components to javafx.fxml;
     exports src.data;
+    opens src.data to javafx.fxml;
 }
