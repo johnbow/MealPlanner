@@ -2,6 +2,7 @@ package src;
 
 import src.data.Config;
 import src.data.Database;
+import src.data.JSONLoader;
 import src.gui.GUI;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -12,9 +13,11 @@ import java.util.Objects;
 
 public class MainApp extends Application {
 
+    private Config config;
+
     @Override
     public void start(Stage stage) throws IOException {
-        Config config = Config.loadConfig();
+        config = Config.loadConfig();
         Database database = new Database();
         if (Config.DO_CLEAN_INSTALL)
             doCleanUp(config);
@@ -25,7 +28,7 @@ public class MainApp extends Application {
 
     @Override
     public void stop() {
-        // TODO
+        config.save();
     }
 
     private void doCleanUp(Config config) {

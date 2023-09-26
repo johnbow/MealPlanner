@@ -4,15 +4,17 @@ import javafx.scene.control.TextFormatter;
 import net.harawata.appdirs.AppDirs;
 import net.harawata.appdirs.AppDirsFactory;
 
+import java.io.File;
+import java.util.Objects;
 import java.util.function.UnaryOperator;
 
-public class Config {
+public final class Config {
 
     public static final boolean DO_CLEAN_INSTALL = true;
 
     public static final String APPLICATION_NAME = "MealPlanner";
     public static final String AUTHOR_NAME = "Klein";
-    public static final String CONFIG_FILE = "config.json";
+    public static final String CONFIG_FILE = "config";
     public static final String DATABASE_FILE = "food.db";
     public static final String RECIPE_FOLDER = "recipes/";
 
@@ -31,26 +33,49 @@ public class Config {
         return null;
     };
 
+    // configurable:
     private int initialHeight = 600;
     private int initialWidth = 800;
     private String dataDirectory = "";
-    private String configDirectory;
-    private JSONLoader jsonLoader;
 
-    private Config() {}
+    private transient String configDirectory;
+    private transient JSONLoader jsonLoader;
+
+    Config() {}
 
     public static Config loadConfig() {
-        Config config = new Config();
-
         AppDirs appDirs = AppDirsFactory.getInstance();
-        config.setConfigDirectory(appDirs.getUserConfigDir(APPLICATION_NAME, CONFIG_FILE, AUTHOR_NAME));
+        String configDir = appDirs.getUserConfigDir(APPLICATION_NAME, "", AUTHOR_NAME);
+        JSONLoader json = new JSONLoader(configDir);
+
+        if (DO_CLEAN_INSTALL)
+            deleteConfigFile(configDir);
+
+        Config config = json.readConfig();
+        if (config == null) {
+            System.out.println("Using default config.");
+            config = new Config();
+        }
+        config.setConfigDirectory(configDir);
 
         if (config.getDataDirectory().isBlank()) {
             String userDataDir = appDirs.getUserDataDir(APPLICATION_NAME, "", AUTHOR_NAME);
             config.setDataDirectory(userDataDir);
         }
-        config.setJsonLoader(new JSONLoader(config.getDataDirectory(), config.getConfigDirectory()));
+        json.setDataDir(config.getDataDirectory());
+        config.setJsonLoader(json);
         return config;
+    }
+
+    private static void deleteConfigFile(String configDir) {
+        File configFile = new File(configDir + CONFIG_FILE + JSONLoader.EXTENSION);
+        System.out.println(configFile.isFile());
+        if (configFile.isFile() && configFile.delete())
+            System.out.printf("Deleted %s.\n", configFile.getName());
+    }
+
+    public void save() {
+        getJsonLoader().write(this);
     }
 
     public String getConfigDirectory() {
@@ -91,6 +116,20 @@ public class Config {
 
     public void setInitialWidth(int initialWidth) {
         this.initialWidth = initialWidth;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) return true;
+        if (!(other instanceof Config otherConfig)) return false;
+        return initialHeight == otherConfig.getInitialHeight() && initialWidth == otherConfig.getInitialWidth()
+                && getDataDirectory().equals(otherConfig.getDataDirectory())
+                && getConfigDirectory().equals(otherConfig.getConfigDirectory());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(initialHeight, initialWidth, dataDirectory, configDirectory);
     }
 
 }

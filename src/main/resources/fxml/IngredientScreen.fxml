@@ -36,7 +36,7 @@
       </HBox>
       <HBox alignment="TOP_CENTER" VBox.vgrow="NEVER">
          <children>
-            <Label fx:id="errorLabel" disable="true" textAlignment="CENTER" textFill="RED" wrapText="true" />
+            <Label fx:id="errorLabel" textAlignment="CENTER" textFill="RED" visible="false" wrapText="true" />
          </children>
       </HBox>
    </children>

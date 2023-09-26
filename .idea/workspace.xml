@@ -5,17 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4c0eac42-ae49-4629-a0fe-4ef6521f7fba" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/src/data/JSONLoader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/src/data/QuantityIngredient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/src/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/data/Config.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/src/MainApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/MainApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/src/data/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/data/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/src/data/SQLStatements.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/data/SQLStatements.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/GUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/data/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/data/Config.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/data/JSONLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/data/JSONLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/data/Recipe.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/data/Recipe.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/data/RecipeInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/data/RecipeInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/controllers/IngredientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/controllers/IngredientController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/controllers/RecipeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/controllers/RecipeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/CalendarScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/CalendarScreen.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/IngredientScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/IngredientScreen.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -284,7 +284,14 @@
       <option name="project" value="LOCAL" />
       <updated>1695650446115</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="added recipe to json parsing and added cleanup tool">
+      <created>1695671970043</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1695671970043</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -296,6 +303,7 @@
     <MESSAGE value="added database support for Measures" />
     <MESSAGE value="ingredients can now be added to database" />
     <MESSAGE value="recipe info can now be added to database" />
-    <option name="LAST_COMMIT_MESSAGE" value="recipe info can now be added to database" />
+    <MESSAGE value="added recipe to json parsing and added cleanup tool" />
+    <option name="LAST_COMMIT_MESSAGE" value="added recipe to json parsing and added cleanup tool" />
   </component>
 </project>

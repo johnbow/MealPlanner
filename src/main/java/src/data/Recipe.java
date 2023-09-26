@@ -5,5 +5,5 @@ import java.util.List;
 public record Recipe (
         RecipeInfo info,
         String description,
-        List<Ingredient> ingredients
+        List<QuantityIngredient> ingredients
 ) {}

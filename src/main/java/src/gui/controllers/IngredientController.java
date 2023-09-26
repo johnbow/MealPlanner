@@ -15,12 +15,12 @@ public class IngredientController extends Controller {
     private Measure.Number measureNumber = Measure.Number.PLURAL;
     private final String calorieFormatString = "kcal per %s %s";
 
-    private Task<List<Measure>> loadMeasuresTask = new Task<>() {
+    private final Task<List<Measure>> loadMeasuresTask = new Task<>() {
         @Override protected List<Measure> call() {
             return getGui().getDatabase().getMeasures();
         }
     };
-    private Thread loadMeasuresThread = new Thread(loadMeasuresTask);
+    private final Thread loadMeasuresThread = new Thread(loadMeasuresTask);
 
     @FXML private TextField nameField;
     @FXML private TextField measureSizeField;
@@ -31,6 +31,7 @@ public class IngredientController extends Controller {
 
     @FXML
     public void initialize() {
+        errorLabel.setManaged(false);
         setMeasureBoxListeners();
         setMeasureNumber(measureNumber);
         setMeasureSizeFieldListeners();
