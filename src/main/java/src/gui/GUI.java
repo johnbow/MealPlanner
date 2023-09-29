@@ -6,7 +6,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import src.data.Config;
 import src.data.Database;
-import src.data.JSONLoader;
 import src.gui.controllers.Controller;
 import src.gui.controllers.Screen;
 
@@ -14,9 +13,10 @@ import java.io.IOException;
 
 public class GUI {
 
-    private Stage stage;
-    private Config config;
-    private Database database;
+    private final Stage stage;
+    private final Config config;
+    private final Database database;
+
     private Controller controller;
     private Screen currentScreen;
 
@@ -89,8 +89,10 @@ public class GUI {
         /*
         Fixes the dpi scaling issue on windows.
         If dpi is set to anything other than 100%, changing scene
-        cause scene to be rescaled incorrectly. Changing the window size
+        causes scene to be rescaled incorrectly. Changing the window size
         programmatically solves this issue.
+        If the stage is maximized, changing window size has no effect.
+        Instead, un-maximize and maximize again
          */
         stage.setWidth(stage.getWidth() + 0.0001);
         if (stage.isMaximized()) {

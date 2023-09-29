@@ -71,9 +71,9 @@ public final class SQLStatements {
             """;
 
 
-    static final String SELECT_ALL_MEASURES =
+    static final String SELECT_ALL_FROM_TABLE =
             """
-            SELECT * FROM Measures;
+            SELECT * FROM ?;
             """;
 
     static final String EXISTS_ANY_MEASURE =

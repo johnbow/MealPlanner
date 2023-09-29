@@ -21,6 +21,13 @@ public class RecipeController extends Controller {
         }
     };
     private final Thread addRecipeThread = new Thread(addRecipeTask);
+    private final Task<List<Ingredient>> loadIngredientsTask = new Task<>() {
+        @Override
+        protected List<Ingredient> call() {
+            return getGui().getDatabase().getIngredients();
+        }
+    };
+    private final Thread loadIngredientsThread = new Thread(loadIngredientsTask);
 
     @FXML private Button returnToCalendarButton;
     @FXML private Button addIngredientButton, addRecipeButton;
@@ -39,6 +46,9 @@ public class RecipeController extends Controller {
             if (added)
                 getGui().loadScreen(Screen.CALENDAR);
         });
+        loadIngredientsTask.setOnSucceeded(t -> {
+            addAllToIngredientsList(loadIngredientsTask.getValue());
+        });
     }
 
     @FXML
@@ -46,6 +56,7 @@ public class RecipeController extends Controller {
         Controller dialog = openDialog(Screen.INGREDIENT, StageStyle.UTILITY, Modality.WINDOW_MODAL);
         IngredientController ingredientController = (IngredientController) dialog;
         ingredientController.setIngredientName(searchIngredientsField.getText());
+        ingredientController.getStage().setResizable(false);
     }
 
     @FXML
@@ -78,6 +89,14 @@ public class RecipeController extends Controller {
             return false;
         }
         return true;
+    }
+
+    public void addAllToIngredientsList(List<Ingredient> ingredients) {
+
+    }
+
+    public void addToIngredientsList(Ingredient ingredient) {
+
     }
 
     private List<QuantityIngredient> getIngredientsWithQuantities() {

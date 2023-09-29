@@ -5,17 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4c0eac42-ae49-4629-a0fe-4ef6521f7fba" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/src/data/QuantityIngredient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/src/gui/components/IngredientListViewCell.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/src/MainApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/MainApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/src/data/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/data/Config.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/src/data/JSONLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/data/JSONLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/src/data/Recipe.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/data/Recipe.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/src/data/RecipeInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/data/RecipeInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/data/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/data/Database.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/data/SQLStatements.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/data/SQLStatements.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/GUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/controllers/IngredientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/controllers/IngredientController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/controllers/RecipeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/controllers/RecipeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/CalendarScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/CalendarScreen.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/IngredientScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/IngredientScreen.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -70,8 +67,8 @@
       <list>
         <option value="Enum" />
         <option value="FxmlFile" />
-        <option value="Class" />
         <option value="Record" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -291,7 +288,14 @@
       <option name="project" value="LOCAL" />
       <updated>1695671970043</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="added (de)serialization of config&#10;moved addRecipe into a javafx.Task">
+      <created>1695762226788</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1695762226788</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -304,6 +308,7 @@
     <MESSAGE value="ingredients can now be added to database" />
     <MESSAGE value="recipe info can now be added to database" />
     <MESSAGE value="added recipe to json parsing and added cleanup tool" />
-    <option name="LAST_COMMIT_MESSAGE" value="added recipe to json parsing and added cleanup tool" />
+    <MESSAGE value="added (de)serialization of config&#10;moved addRecipe into a javafx.Task" />
+    <option name="LAST_COMMIT_MESSAGE" value="added (de)serialization of config&#10;moved addRecipe into a javafx.Task" />
   </component>
 </project>

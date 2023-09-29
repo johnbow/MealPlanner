@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -27,6 +28,43 @@
          <children>
             <TextField fx:id="calorieField" prefColumnCount="4" promptText="100.0" />
             <Label fx:id="calorieLabel" />
+         </children>
+      </HBox>
+      <VBox fx:id="macrosBox" spacing="10.0" VBox.vgrow="NEVER">
+         <children>
+            <HBox VBox.vgrow="NEVER">
+               <children>
+                  <VBox fillWidth="false" minWidth="200.0" spacing="10.0">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" spacing="5.0">
+                           <children>
+                              <TextField fx:id="carbsField" prefColumnCount="4" promptText="0.0" />
+                              <Label fx:id="carbsLabel" text="carbs" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="5.0">
+                           <children>
+                              <TextField fx:id="fatField" prefColumnCount="4" promptText="0.0" />
+                              <Label fx:id="fatLabel" text="fat" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="5.0">
+                           <children>
+                              <TextField fx:id="proteinField" prefColumnCount="4" promptText="0.0" />
+                              <Label fx:id="proteinLabel" text="protein" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <CheckBox fx:id="macrosPercentBox" mnemonicParsing="false" onAction="#onMacrosPercentToggled" text="Macros in percent" />
+         </children>
+      </VBox>
+      <HBox alignment="CENTER_RIGHT" spacing="5.0" VBox.vgrow="NEVER">
+         <children>
+            <Label text="show macros" />
+            <Button fx:id="toggleMacros" mnemonicParsing="false" onAction="#onToggleMacros" text="toggle" />
          </children>
       </HBox>
       <HBox alignment="CENTER">
