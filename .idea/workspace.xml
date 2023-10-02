@@ -5,15 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4c0eac42-ae49-4629-a0fe-4ef6521f7fba" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/src/gui/components/IngredientListViewCell.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/src/MainApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/MainApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/data/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/data/Config.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/src/data/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/data/Database.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/src/data/SQLStatements.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/data/SQLStatements.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/GUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/components/IngredientListViewCell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/components/IngredientListViewCell.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/controllers/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/controllers/Controller.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/controllers/IngredientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/controllers/IngredientController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/controllers/RecipeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/controllers/RecipeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/IngredientScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/IngredientScreen.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/RecipeScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/RecipeScreen.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -295,7 +295,14 @@
       <option name="project" value="LOCAL" />
       <updated>1695762226788</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="added macros to ingredients">
+      <created>1695989141009</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1695989141009</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -309,6 +316,7 @@
     <MESSAGE value="recipe info can now be added to database" />
     <MESSAGE value="added recipe to json parsing and added cleanup tool" />
     <MESSAGE value="added (de)serialization of config&#10;moved addRecipe into a javafx.Task" />
-    <option name="LAST_COMMIT_MESSAGE" value="added (de)serialization of config&#10;moved addRecipe into a javafx.Task" />
+    <MESSAGE value="added macros to ingredients" />
+    <option name="LAST_COMMIT_MESSAGE" value="added macros to ingredients" />
   </component>
 </project>

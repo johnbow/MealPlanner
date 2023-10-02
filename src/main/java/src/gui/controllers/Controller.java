@@ -21,12 +21,12 @@ public abstract class Controller {
     private String filename;
     /** Name of css file associated with controller */
     private String stylesheet;
-    private List<Stage> dialogs;
+    private List<Controller> dialogs;
     private boolean isDialog = false;
     private Stage stage;
 
     Controller() {
-        dialogs = new ArrayList<Stage>();
+        dialogs = new ArrayList<Controller>();
     }
 
     void setGUI(GUI gui) {
@@ -63,14 +63,14 @@ public abstract class Controller {
 
     public Controller openDialog(Screen screen, StageStyle stageStyle, Modality modality) {
         Controller dialog = getGui().loadDialog(screen, stageStyle, modality);
-        dialogs.add(dialog.getStage());
+        dialogs.add(dialog);
         dialog.getStage().show();
         return dialog;
     }
 
     public void closeAllDialogs() {
-        for (Stage stage : dialogs)
-            stage.close();
+        for (Controller dialog : dialogs)
+            dialog.closeThisDialog();
     }
 
     public void closeThisDialog() {

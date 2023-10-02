@@ -7,7 +7,9 @@ import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.StageStyle;
 import javafx.util.converter.IntegerStringConverter;
+
 import src.data.*;
+import src.gui.components.IngredientListViewCell;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,13 +23,8 @@ public class RecipeController extends Controller {
         }
     };
     private final Thread addRecipeThread = new Thread(addRecipeTask);
-    private final Task<List<Ingredient>> loadIngredientsTask = new Task<>() {
-        @Override
-        protected List<Ingredient> call() {
-            return getGui().getDatabase().getIngredients();
-        }
-    };
-    private final Thread loadIngredientsThread = new Thread(loadIngredientsTask);
+    private Thread loadIngredientsThread;
+    private List<Ingredient> queryList;
 
     @FXML private Button returnToCalendarButton;
     @FXML private Button addIngredientButton, addRecipeButton;
@@ -39,6 +36,7 @@ public class RecipeController extends Controller {
     @FXML
     public void initialize() {
         getGui().getStage().setTitle("Add Recipe");
+        queryList = new ArrayList<>(getGui().getConfig().getListViewResultsLimit());
         servingsField.setTextFormatter(new TextFormatter<Integer>(
                 new IntegerStringConverter(), 1, Config.INT_FILTER_2_PLACES));
         addRecipeTask.setOnSucceeded(t -> {
@@ -46,9 +44,13 @@ public class RecipeController extends Controller {
             if (added)
                 getGui().loadScreen(Screen.CALENDAR);
         });
-        loadIngredientsTask.setOnSucceeded(t -> {
-            addAllToIngredientsList(loadIngredientsTask.getValue());
+        ingredientsList.setCellFactory(ingredientListView -> new IngredientListViewCell());
+        searchIngredientsField.textProperty().addListener((observable, oldValue, newValue) -> {
+            searchIngredientsField.setText(newValue);
+            if (!newValue.equals(oldValue))
+                updateIngredientsList();
         });
+        updateIngredientsList();
     }
 
     @FXML
@@ -91,12 +93,38 @@ public class RecipeController extends Controller {
         return true;
     }
 
-    public void addAllToIngredientsList(List<Ingredient> ingredients) {
+    public synchronized void updateIngredientsList() {
+        // First, apply filter to ingredients list and add only queried ingredients, which are not already present
+        if (loadIngredientsThread != null && loadIngredientsThread.isAlive()) {
+            loadIngredientsThread.interrupt();
+        }
+        else {
+            Task<Void> task = new Task<>() {
+                @Override
+                protected Void call() {
+                    getGui().getDatabase().addIngredientsTo(
+                            queryList,
+                            searchIngredientsField.getText(),
+                            getGui().getConfig().getListViewResultsLimit()
+                    );
+                    return null;
+                }
+            };
+            task.setOnSucceeded(t -> {
+                ingredientsList.getItems().clear();
+                ingredientsList.getItems().addAll(queryList);
+            });
+            loadIngredientsThread = new Thread(task);
+            loadIngredientsThread.start();
+        }
+    }
 
+    public void addAllToIngredientsList(List<Ingredient> ingredients) {
+        ingredientsList.getItems().addAll(ingredients);
     }
 
     public void addToIngredientsList(Ingredient ingredient) {
-
+        ingredientsList.getItems().add(ingredient);
     }
 
     private List<QuantityIngredient> getIngredientsWithQuantities() {
@@ -108,5 +136,4 @@ public class RecipeController extends Controller {
         // TODO
         return 0.d;
     }
-
 }

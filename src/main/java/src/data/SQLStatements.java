@@ -76,6 +76,14 @@ public final class SQLStatements {
             SELECT * FROM ?;
             """;
 
+    static final String SELECT_INGREDIENTS_BY_NAME =
+            """
+            SELECT *
+            FROM Ingredients
+            WHERE name LIKE ?
+            LIMIT ?;
+            """;
+
     static final String EXISTS_ANY_MEASURE =
             """
             SELECT COUNT(*) FROM (SELECT 0 FROM Measures LIMIT 1);

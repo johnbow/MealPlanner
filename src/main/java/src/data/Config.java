@@ -36,6 +36,7 @@ public final class Config {
     // configurable:
     private int initialHeight = 600;
     private int initialWidth = 800;
+    private int listViewResultsLimit = 20;
     private String dataDirectory = "";
 
     private transient String configDirectory;
@@ -84,6 +85,14 @@ public final class Config {
 
     public void setConfigDirectory(String configDirectory) {
         this.configDirectory = configDirectory;
+    }
+
+    public int getListViewResultsLimit() {
+        return listViewResultsLimit;
+    }
+
+    public void setListViewResultsLimit(int listViewResultsLimit) {
+        this.listViewResultsLimit = listViewResultsLimit;
     }
 
     public JSONLoader getJsonLoader() {

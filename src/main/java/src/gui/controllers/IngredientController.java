@@ -23,7 +23,7 @@ public class IngredientController extends Controller {
 
     private final Task<List<Measure>> loadMeasuresTask = new Task<>() {
         @Override protected List<Measure> call() {
-            return getGui().getDatabase().getMeasures();
+            return getGui().getDatabase().getAllMeasures();
         }
     };
     private final Thread loadMeasuresThread = new Thread(loadMeasuresTask);
@@ -46,6 +46,7 @@ public class IngredientController extends Controller {
     public void initialize() {
         showErrorLabel(false);
         configureMacros();
+        configureCalorieField();
         setMeasureBoxListeners();
         setMeasureNumber(measureNumber);
         setMeasureSizeFieldListeners();
@@ -58,7 +59,7 @@ public class IngredientController extends Controller {
         if (calorieField.getText().isBlank() || measureSizeField.getText().isBlank() || nameField.getText().isBlank())
             return;
         // TODO: check if ingredient name is not already present
-        boolean isValid = getGui().getDatabase().insertIngredient(new Ingredient(
+        Ingredient ingredient = new Ingredient(
                 nameField.getText(),
                 measureBox.getValue(),
                 Double.parseDouble(measureSizeField.getText()),
@@ -67,9 +68,13 @@ public class IngredientController extends Controller {
                 Double.parseDouble(carbsField.getText()),
                 Double.parseDouble(fatField.getText()),
                 Double.parseDouble(proteinField.getText())
-        ));
-        if (isValid)
+        );
+        boolean isValid = getGui().getDatabase().insertIngredient(ingredient);
+        if (isValid) {
+            if (getGui().getController() instanceof RecipeController recipeController)
+                recipeController.updateIngredientsList();
             closeThisDialog();
+        }
     }
 
     @FXML
@@ -135,6 +140,11 @@ public class IngredientController extends Controller {
         if (loadMeasuresThread.isAlive())
             return;
         loadMeasuresThread.start();
+    }
+
+    private void configureCalorieField() {
+        calorieField.setTextFormatter(new TextFormatter<>(
+                new DoubleStringConverter(), 0.0, Config.DOUBLE_FILTER));
     }
 
     private void updateCalorieLabel(String quantity, String measure) {

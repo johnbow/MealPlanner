@@ -1,5 +1,7 @@
 package src.data;
 
+import javafx.application.Platform;
+
 import java.sql.*;
 import java.util.*;
 
@@ -149,7 +151,7 @@ public class Database {
         return null;
     }
 
-    public List<Measure> getMeasures() {
+    public List<Measure> getAllMeasures() {
         if (measureMap.isEmpty())
             return getMeasuresFromTable();
         return new ArrayList<>(measureMap.values());
@@ -173,7 +175,7 @@ public class Database {
         return measures;
     }
 
-    public List<Ingredient> getIngredients() {
+    public List<Ingredient> getAllIngredients() {
         List<Ingredient> ingredients = new ArrayList<>();
         try (ResultSet rs = getAllFromTable(INGREDIENTS)) {
             if (rs == null) return null; // should not happen
@@ -195,4 +197,31 @@ public class Database {
         return ingredients;
     }
 
+    public synchronized void addIngredientsTo(Collection<Ingredient> ingredients, String query, int limit) {
+        try(
+                Connection con = DriverManager.getConnection(dbURL);
+                PreparedStatement pstmt = con.prepareStatement(SQLStatements.SELECT_INGREDIENTS_BY_NAME);
+        ) {
+            pstmt.setString(1, query + "%");
+            pstmt.setInt(2, limit);
+            try(ResultSet rs = pstmt.executeQuery()) {
+                if (!Thread.interrupted())
+                    ingredients.clear();
+                while (rs.next() && !Thread.interrupted()) {
+                    ingredients.add(new Ingredient(
+                            rs.getString(1),
+                            measureMap.get(rs.getString(2)),
+                            rs.getDouble(3),
+                            rs.getDouble(4),
+                            rs.getInt(5),
+                            rs.getDouble(6),
+                            rs.getDouble(7),
+                            rs.getDouble(8)
+                    ));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
