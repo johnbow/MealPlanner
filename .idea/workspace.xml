@@ -6,9 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="4c0eac42-ae49-4629-a0fe-4ef6521f7fba" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/src/data/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/data/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/components/QueryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/components/QueryService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/controllers/RecipeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/controllers/RecipeController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -312,7 +309,14 @@
       <option name="project" value="LOCAL" />
       <updated>1696277654340</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="improved search for ingredients&#10;- added SearchBar and QueryService class&#10;- improved speed by using Sets">
+      <created>1696278731403</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1696278731403</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
