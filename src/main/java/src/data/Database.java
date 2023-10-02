@@ -197,7 +197,7 @@ public class Database {
         return ingredients;
     }
 
-    public synchronized void addIngredientsTo(Collection<Ingredient> ingredients, String query, int limit) {
+    public synchronized boolean addIngredientsTo(Collection<Ingredient> ingredients, String query, int limit) {
         try(
                 Connection con = DriverManager.getConnection(dbURL);
                 PreparedStatement pstmt = con.prepareStatement(SQLStatements.SELECT_INGREDIENTS_BY_NAME);
@@ -205,8 +205,6 @@ public class Database {
             pstmt.setString(1, query + "%");
             pstmt.setInt(2, limit);
             try(ResultSet rs = pstmt.executeQuery()) {
-                if (!Thread.interrupted())
-                    ingredients.clear();
                 while (rs.next() && !Thread.interrupted()) {
                     ingredients.add(new Ingredient(
                             rs.getString(1),
@@ -221,7 +219,9 @@ public class Database {
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            return false;
         }
+        return true;
     }
 }

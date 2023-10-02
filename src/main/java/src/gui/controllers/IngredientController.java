@@ -72,7 +72,7 @@ public class IngredientController extends Controller {
         boolean isValid = getGui().getDatabase().insertIngredient(ingredient);
         if (isValid) {
             if (getGui().getController() instanceof RecipeController recipeController)
-                recipeController.updateIngredientsList();
+                recipeController.getIngredientSearchBar().search();
             closeThisDialog();
         }
     }

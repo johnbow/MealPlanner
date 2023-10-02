@@ -10,9 +10,12 @@ import javafx.util.converter.IntegerStringConverter;
 
 import src.data.*;
 import src.gui.components.IngredientListViewCell;
+import src.gui.components.QueryService;
+import src.gui.components.SearchBar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class RecipeController extends Controller {
 
@@ -23,12 +26,10 @@ public class RecipeController extends Controller {
         }
     };
     private final Thread addRecipeThread = new Thread(addRecipeTask);
-    private Thread loadIngredientsThread;
-    private List<Ingredient> queryList;
 
     @FXML private Button returnToCalendarButton;
     @FXML private Button addIngredientButton, addRecipeButton;
-    @FXML private TextField searchIngredientsField;
+    @FXML private SearchBar<Ingredient> ingredientSearchBar;
     @FXML private TextField nameField, servingsField;
     @FXML private ListView<Ingredient> ingredientsList;
     @FXML private TextArea descriptionArea;
@@ -36,7 +37,6 @@ public class RecipeController extends Controller {
     @FXML
     public void initialize() {
         getGui().getStage().setTitle("Add Recipe");
-        queryList = new ArrayList<>(getGui().getConfig().getListViewResultsLimit());
         servingsField.setTextFormatter(new TextFormatter<Integer>(
                 new IntegerStringConverter(), 1, Config.INT_FILTER_2_PLACES));
         addRecipeTask.setOnSucceeded(t -> {
@@ -44,20 +44,15 @@ public class RecipeController extends Controller {
             if (added)
                 getGui().loadScreen(Screen.CALENDAR);
         });
-        ingredientsList.setCellFactory(ingredientListView -> new IngredientListViewCell());
-        searchIngredientsField.textProperty().addListener((observable, oldValue, newValue) -> {
-            searchIngredientsField.setText(newValue);
-            if (!newValue.equals(oldValue))
-                updateIngredientsList();
-        });
-        updateIngredientsList();
+        configureSearchBar();
+        ingredientSearchBar.search();
     }
 
     @FXML
     public void openIngredientDialog() {
         Controller dialog = openDialog(Screen.INGREDIENT, StageStyle.UTILITY, Modality.WINDOW_MODAL);
         IngredientController ingredientController = (IngredientController) dialog;
-        ingredientController.setIngredientName(searchIngredientsField.getText());
+        ingredientController.setIngredientName(ingredientSearchBar.getText());
         ingredientController.getStage().setResizable(false);
     }
 
@@ -69,6 +64,18 @@ public class RecipeController extends Controller {
     @FXML
     private void onAddRecipe(ActionEvent event) {
         addRecipeThread.start();
+    }
+
+    private void configureSearchBar() {
+        ingredientSearchBar.setDisplay(ingredientsList.getItems());
+        int capacity = getGui().getConfig().getListViewResultsLimit();
+        ingredientSearchBar.setSearchQuery(new QueryService<>(capacity) {
+            @Override
+            protected Boolean query(Set<Ingredient> resultSet, String searchText) {
+                return getGui().getDatabase().addIngredientsTo(resultSet, searchText, capacity);
+            }
+        });
+        ingredientsList.setCellFactory(ingredientListView -> new IngredientListViewCell());
     }
 
     private boolean addRecipe() {
@@ -93,38 +100,8 @@ public class RecipeController extends Controller {
         return true;
     }
 
-    public synchronized void updateIngredientsList() {
-        // First, apply filter to ingredients list and add only queried ingredients, which are not already present
-        if (loadIngredientsThread != null && loadIngredientsThread.isAlive()) {
-            loadIngredientsThread.interrupt();
-        }
-        else {
-            Task<Void> task = new Task<>() {
-                @Override
-                protected Void call() {
-                    getGui().getDatabase().addIngredientsTo(
-                            queryList,
-                            searchIngredientsField.getText(),
-                            getGui().getConfig().getListViewResultsLimit()
-                    );
-                    return null;
-                }
-            };
-            task.setOnSucceeded(t -> {
-                ingredientsList.getItems().clear();
-                ingredientsList.getItems().addAll(queryList);
-            });
-            loadIngredientsThread = new Thread(task);
-            loadIngredientsThread.start();
-        }
-    }
-
-    public void addAllToIngredientsList(List<Ingredient> ingredients) {
-        ingredientsList.getItems().addAll(ingredients);
-    }
-
-    public void addToIngredientsList(Ingredient ingredient) {
-        ingredientsList.getItems().add(ingredient);
+    public SearchBar<Ingredient> getIngredientSearchBar() {
+        return ingredientSearchBar;
     }
 
     private List<QuantityIngredient> getIngredientsWithQuantities() {
