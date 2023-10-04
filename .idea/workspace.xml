@@ -6,11 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="4c0eac42-ae49-4629-a0fe-4ef6521f7fba" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/src/data/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/data/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/src/data/Ingredient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/data/Ingredient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/components/IngredientTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/components/IngredientTable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/controllers/IngredientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/controllers/IngredientController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/controllers/RecipeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/controllers/RecipeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/css/RecipeScreen.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/css/RecipeScreen.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -335,7 +332,14 @@
       <option name="project" value="LOCAL" />
       <updated>1696419063064</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="changed measure storage&#10;- ingredients store only the measure name&#10;- Database holds measures as static variables&#10;- accessors to measures are static">
+      <created>1696422652880</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1696422652880</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -354,6 +358,7 @@
     <MESSAGE value="improved search for ingredients&#10;- added SearchBar and QueryService class&#10;- improved speed by using Sets" />
     <MESSAGE value="improved search for ingredients&#10;- added SearchBar and QueryService class&#10;- improved speed by using Sets&#10;- small fixes" />
     <MESSAGE value="added ingredientTable&#10;- ingredients can be added to table&#10;- recipe can be correctly added" />
-    <option name="LAST_COMMIT_MESSAGE" value="added ingredientTable&#10;- ingredients can be added to table&#10;- recipe can be correctly added" />
+    <MESSAGE value="changed measure storage&#10;- ingredients store only the measure name&#10;- Database holds measures as static variables&#10;- accessors to measures are static" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed measure storage&#10;- ingredients store only the measure name&#10;- Database holds measures as static variables&#10;- accessors to measures are static" />
   </component>
 </project>

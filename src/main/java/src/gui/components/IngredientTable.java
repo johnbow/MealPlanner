@@ -23,6 +23,7 @@ public class IngredientTable extends TableView<IngredientTable.Row> {
     private final TableColumn<Row, Double> quantityCol;
     private final TableColumn<Row, Measure> measureCol;
     private final TableColumn<Row, String> calorieCol;
+    private final TableColumn joinedCol;
 
     private final Converters.MeasureStringConverter measureStringConverter
             = new Converters.MeasureStringConverter(Database.getMeasuresTable());
@@ -31,10 +32,11 @@ public class IngredientTable extends TableView<IngredientTable.Row> {
         getStyleClass().add("ingredient-table");
         setEditable(true);
         getSelectionModel().setCellSelectionEnabled(true);
-        nameCol = new TableColumn<>("name");
+        nameCol = new TableColumn<>("Name");
         quantityCol = new TableColumn<>("quantity");
         measureCol = new TableColumn<>("measure");
-        calorieCol = new TableColumn<>("calories");
+        calorieCol = new TableColumn<>("Calories");
+        joinedCol = new TableColumn("Quantity");
 
         quantityCol.setCellFactory(this::createQuantityCell);
         measureCol.setCellFactory(this::createMeasureCell);
@@ -44,9 +46,14 @@ public class IngredientTable extends TableView<IngredientTable.Row> {
         measureCol.setCellValueFactory(col -> col.getValue().measure);
         calorieCol.setCellValueFactory(col -> col.getValue().calories.asString("%.1f kcal"));
 
+        quantityCol.getStyleClass().add("joined-cols");
+        measureCol.getStyleClass().add("joined-cols");
+
+        joinedCol.getColumns().add(quantityCol);
+        joinedCol.getColumns().add(measureCol);
+
         getColumns().add(nameCol);
-        getColumns().add(quantityCol);
-        getColumns().add(measureCol);
+        getColumns().add(joinedCol);
         getColumns().add(calorieCol);
     }
 
@@ -99,7 +106,7 @@ public class IngredientTable extends TableView<IngredientTable.Row> {
             this.ingredient = new ReadOnlyObjectWrapper<>(ingredient);
             this.quantity = new SimpleDoubleProperty(quantity);
             this.measure = new SimpleObjectProperty<>(ingredient.measure());
-            this.calories = new SimpleDoubleProperty();
+            this.calories = new SimpleDoubleProperty(ingredient.calories(quantity));
 
             this.measure.addListener((observable, oldValue, newValue) -> {
                 this.calories.set(this.ingredient.get().calories(newValue, this.quantity.get()));
