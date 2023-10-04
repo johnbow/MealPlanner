@@ -12,8 +12,9 @@ public final class SQLStatements {
             CREATE TABLE IF NOT EXISTS Measures (
                 singular_name VARCHAR(255) PRIMARY KEY NOT NULL,
                 plural_name VARCHAR(255) NOT NULL UNIQUE,
-                abbreviation VARCHAR(15) NOT NULL,
-                default_quantity REAL NOT NULL
+                abbreviation VARCHAR(15) NOT NULL UNIQUE,
+                default_quantity REAL NOT NULL,
+                conversion REAL NOT NULL
             );
             """;
 
@@ -54,8 +55,8 @@ public final class SQLStatements {
 
     static final String INSERT_MEASURE =
             """
-            INSERT INTO Measures(singular_name, plural_name, abbreviation, default_quantity)
-            VALUES (?,?,?,?);
+            INSERT INTO Measures(singular_name, plural_name, abbreviation, default_quantity, conversion)
+            VALUES (?,?,?,?,?);
             """;
 
     static final String INSERT_INGREDIENT =

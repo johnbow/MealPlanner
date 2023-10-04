@@ -4,12 +4,11 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import src.gui.components.IngredientTable?>
 <?import src.gui.components.SearchBar?>
 
 <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="20.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
@@ -47,7 +46,7 @@
       </HBox>
       <HBox alignment="CENTER" spacing="15.0" VBox.vgrow="ALWAYS">
          <children>
-            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="15.0" HBox.hgrow="ALWAYS">
+            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="300.0" spacing="15.0" HBox.hgrow="ALWAYS">
                <children>
                   <VBox VBox.vgrow="ALWAYS">
                      <children>
@@ -67,12 +66,7 @@
                   <TextArea fx:id="descriptionArea" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="100.0" promptText="Description" VBox.vgrow="ALWAYS" />
                </children>
             </VBox>
-            <TableView HBox.hgrow="ALWAYS">
-              <columns>
-                <TableColumn prefWidth="75.0" text="Ingredients" />
-                <TableColumn prefWidth="75.0" text="Quantity" />
-              </columns>
-            </TableView>
+            <IngredientTable fx:id="ingredientsTable" />
          </children>
          <VBox.margin>
             <Insets />

@@ -5,7 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4c0eac42-ae49-4629-a0fe-4ef6521f7fba" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/src/gui/components/EditCell.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/src/gui/components/IngredientTable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/src/gui/components/QuantityCell.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/src/util/Converters.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/src/util/Query.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/data/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/data/Database.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/data/Ingredient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/data/Ingredient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/data/Measure.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/data/Measure.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/data/QuantityIngredient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/data/QuantityIngredient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/data/SQLStatements.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/data/SQLStatements.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/components/QueryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/util/QueryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/components/SearchBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/components/SearchBar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/controllers/RecipeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/controllers/RecipeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/css/RecipeScreen.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/css/RecipeScreen.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/RecipeScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/RecipeScreen.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -209,10 +225,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.FoodTracker [run]" />
+        <item itemvalue="Gradle.FoodTracker [jar]" />
         <item itemvalue="Application.Sample" />
         <item itemvalue="Gradle.FoodTracker [clean]" />
         <item itemvalue="Gradle.MealPlanner [build]" />
-        <item itemvalue="Gradle.FoodTracker [jar]" />
       </list>
     </recent_temporary>
   </component>
@@ -316,7 +332,14 @@
       <option name="project" value="LOCAL" />
       <updated>1696278731403</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="improved search for ingredients&#10;- added SearchBar and QueryService class&#10;- improved speed by using Sets&#10;- small fixes">
+      <created>1696278827926</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1696278827926</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -333,6 +356,7 @@
     <MESSAGE value="added macros to ingredients" />
     <MESSAGE value="can now search for ingredients" />
     <MESSAGE value="improved search for ingredients&#10;- added SearchBar and QueryService class&#10;- improved speed by using Sets" />
-    <option name="LAST_COMMIT_MESSAGE" value="improved search for ingredients&#10;- added SearchBar and QueryService class&#10;- improved speed by using Sets" />
+    <MESSAGE value="improved search for ingredients&#10;- added SearchBar and QueryService class&#10;- improved speed by using Sets&#10;- small fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="improved search for ingredients&#10;- added SearchBar and QueryService class&#10;- improved speed by using Sets&#10;- small fixes" />
   </component>
 </project>

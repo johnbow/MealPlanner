@@ -1,4 +1,4 @@
-package src.gui.components;
+package src.util;
 
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
@@ -6,20 +6,22 @@ import javafx.concurrent.Task;
 import java.util.HashSet;
 import java.util.Set;
 
-public abstract class QueryService<T> extends Service<Boolean> {
+public class QueryService<T> extends Service<Boolean> {
+
+    private final Query<T> query;
 
     private final Set<T> resultSet;
     private String searchText;
 
-    public QueryService() {
+    public QueryService(Query<T> query) {
+        this.query = query;
         resultSet = new HashSet<>();
     }
 
-    public QueryService(int resultSetCapacity) {
+    public QueryService(int resultSetCapacity, Query<T> query) {
+        this.query = query;
         resultSet = new HashSet<>(resultSetCapacity);
     }
-
-    protected abstract Boolean query(Set<T> resultSet, String searchText) throws Exception;
 
     @Override
     protected Task<Boolean> createTask() {
@@ -27,7 +29,7 @@ public abstract class QueryService<T> extends Service<Boolean> {
             @Override
             protected Boolean call() throws Exception {
                 resultSet.clear();
-                return query(resultSet, searchText);
+                return query.query(resultSet, searchText);
             }
         };
     }

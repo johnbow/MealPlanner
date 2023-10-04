@@ -18,4 +18,6 @@ module src {
     opens src.gui.components to javafx.fxml;
     exports src.data;
     opens src.data to javafx.fxml, com.google.gson;
+    exports src.util;
+    opens src.util to javafx.fxml;
 }

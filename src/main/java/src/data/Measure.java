@@ -1,10 +1,15 @@
 package src.data;
 
-public record Measure(String singularName, String pluralName, String abbreviation, double defaultQuantity) {
-
+public record Measure(
+        String singularName,
+        String pluralName,
+        String abbreviation,
+        double defaultQuantity,
+        double conversion   // weight in grams or milliliters
+) {
     public enum Number {
         SINGULAR, PLURAL
-    };
+    }
 
     public String getName(Measure.Number number) {
         return number == Number.SINGULAR ? singularName() : pluralName();
@@ -13,6 +18,10 @@ public record Measure(String singularName, String pluralName, String abbreviatio
     public String getNameByQuantity(double quantity) {
         return Math.abs(quantity - 1.0) < 0.0001 ?
                 singularName() : pluralName();
+    }
+
+    public double convertQuantity(Measure other, double quantity) {
+        return quantity * (other.conversion / this.conversion);
     }
 
     @Override

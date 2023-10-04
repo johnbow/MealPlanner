@@ -1,7 +1,5 @@
 package src.data;
 
-import javafx.application.Platform;
-
 import java.sql.*;
 import java.util.*;
 
@@ -15,10 +13,10 @@ public class Database {
     private Map<String, Measure> measureMap;
 
     private final List<Measure> DEFAULT_MEASURES = Arrays.asList(
-            new Measure("Gram", "Grams", "g", 100.0),
-            new Measure("Kilogram", "Kilograms", "kg", 1.0),
-            new Measure("Liter", "Liters", "l", 1.0),
-            new Measure("Milliliter", "Milliliters", "ml", 100.0)
+            new Measure("Gram", "Grams", "g", 100.0, 1),
+            new Measure("Milliliter", "Milliliters", "ml", 100.0, 1),
+            new Measure("Kilogram", "Kilograms", "kg", 1.0, 1000),
+            new Measure("Liter", "Liters", "l", 1.0, 1000)
     );
 
     public void loadUserData(Config config) {
@@ -69,6 +67,7 @@ public class Database {
                 pstmt.setString(2, measure.pluralName());
                 pstmt.setString(3, measure.abbreviation());
                 pstmt.setDouble(4, measure.defaultQuantity());
+                pstmt.setDouble(5, measure.conversion());
                 pstmt.executeUpdate();
                 measureMap.put(measure.singularName(), measure);
             }
@@ -166,7 +165,8 @@ public class Database {
                         rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
-                        rs.getDouble(4)
+                        rs.getDouble(4),
+                        rs.getDouble(5)
                 ));
             }
         } catch (SQLException e) {

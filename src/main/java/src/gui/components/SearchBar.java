@@ -1,6 +1,7 @@
 package src.gui.components;
 
 import javafx.scene.control.TextField;
+import src.util.QueryService;
 
 import java.util.Collection;
 import java.util.Set;
@@ -30,7 +31,10 @@ public class SearchBar<T> extends TextField {
 
     public void setSearchQuery(QueryService<T> searchQuery) {
         this.searchQuery = searchQuery;
-        this.searchQuery.setOnSucceeded(t -> setSearchResults(this.searchQuery.getResults()));
+        this.searchQuery.setOnSucceeded(t -> {
+            if (this.searchQuery.getValue())
+                setSearchResults(this.searchQuery.getResults());
+        });
     }
 
     public void setDisplay(Collection<T> display) {
@@ -40,7 +44,7 @@ public class SearchBar<T> extends TextField {
     private void setSearchResults(Set<T> results) {
         // remove element from display if not contained in results
         // remove element from results if contained in display
-        display.removeIf(t -> !results.remove(t));
+        display.removeIf(item -> !results.remove(item));
         display.addAll(results);
     }
 

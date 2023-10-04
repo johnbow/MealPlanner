@@ -19,7 +19,20 @@ public record Ingredient (
         this(name, measure, measureSize, caloriesPerMeasureSize, MACROS_NOT_SPECIFIED, 0.0, 0.0, 0.0);
     }
 
-    public double calories(double quantity, Measure otherMeasure) {
+    public double calories(Measure other, double quantity) {
+        return (caloriesPerMeasureSize / measureSize) * measure.convertQuantity(other, quantity);
+    }
+
+    public double calories(double quantity) {
         return caloriesPerMeasureSize / measureSize * quantity;
+    }
+
+    public Ingredient changeMeasure(Measure newMeasure) {
+        return new Ingredient(
+                name,
+                newMeasure,
+                newMeasure.convertQuantity(measure, measureSize),
+                caloriesPerMeasureSize
+        );
     }
 }

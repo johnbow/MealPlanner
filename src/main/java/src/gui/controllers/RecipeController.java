@@ -1,5 +1,6 @@
 package src.gui.controllers;
 
+import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,22 +11,25 @@ import javafx.util.converter.IntegerStringConverter;
 
 import src.data.*;
 import src.gui.components.IngredientListViewCell;
-import src.gui.components.QueryService;
+import src.gui.components.IngredientTable;
+import src.util.QueryService;
 import src.gui.components.SearchBar;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class RecipeController extends Controller {
 
-    private final Task<Boolean> addRecipeTask = new Task<>() {
+    private final Service<Boolean> addRecipeService = new Service<>() {
         @Override
-        protected Boolean call() {
-            return addRecipe();
+        protected Task<Boolean> createTask() {
+            return new Task<>() {
+                @Override
+                protected Boolean call() {
+                    return addRecipe();
+                }
+            };
         }
     };
-    private final Thread addRecipeThread = new Thread(addRecipeTask);
 
     @FXML private Button returnToCalendarButton;
     @FXML private Button addIngredientButton, addRecipeButton;
@@ -33,14 +37,16 @@ public class RecipeController extends Controller {
     @FXML private TextField nameField, servingsField;
     @FXML private ListView<Ingredient> ingredientsList;
     @FXML private TextArea descriptionArea;
+    @FXML private IngredientTable ingredientsTable;
 
     @FXML
     public void initialize() {
         getGui().getStage().setTitle("Add Recipe");
-        servingsField.setTextFormatter(new TextFormatter<Integer>(
+        ingredientsTable.setMeasures(getGui().getDatabase().getAllMeasures());
+        servingsField.setTextFormatter(new TextFormatter<>(
                 new IntegerStringConverter(), 1, Config.INT_FILTER_2_PLACES));
-        addRecipeTask.setOnSucceeded(t -> {
-            boolean added = addRecipeTask.getValue();
+        addRecipeService.setOnSucceeded(t -> {
+            boolean added = addRecipeService.getValue();
             if (added)
                 getGui().loadScreen(Screen.CALENDAR);
         });
@@ -63,33 +69,33 @@ public class RecipeController extends Controller {
 
     @FXML
     private void onAddRecipe(ActionEvent event) {
-        addRecipeThread.start();
+        addRecipeService.restart();
     }
 
     private void configureSearchBar() {
         ingredientSearchBar.setDisplay(ingredientsList.getItems());
         int capacity = getGui().getConfig().getListViewResultsLimit();
-        ingredientSearchBar.setSearchQuery(new QueryService<>(capacity) {
-            @Override
-            protected Boolean query(Set<Ingredient> resultSet, String searchText) {
-                return getGui().getDatabase().addIngredientsTo(resultSet, searchText, capacity);
-            }
-        });
+        ingredientSearchBar.setSearchQuery(new QueryService<>(capacity, (resultSet, searchText) ->
+                getGui().getDatabase().addIngredientsTo(resultSet, searchText, capacity)));
         ingredientsList.setCellFactory(ingredientListView -> new IngredientListViewCell());
+        ingredientsList.setOnMouseClicked(click -> {
+            if (click.getClickCount() == 2)
+                addSelectedIngredientToRecipe();
+        });
     }
 
     private boolean addRecipe() {
         String name = nameField.getText();
         String servingsStr = servingsField.getText();
-        List<QuantityIngredient> pairs = getIngredientsWithQuantities();
-        // TODO: Uncomment if adding ingredients is implemented
-        if (name.isBlank() || servingsStr.isBlank()/* || ingredients.isEmpty()*/)
+        List<QuantityIngredient> qIngredients = ingredientsTable.getAllIngredients();
+        if (name.isBlank() || servingsStr.isBlank() || qIngredients.isEmpty())
             return false;
-        // TODO: Calculate total_calories
-        RecipeInfo info = new RecipeInfo(name, Integer.parseInt(servingsStr), calculateTotalCalories(pairs));
-        Recipe recipe = new Recipe(info, descriptionArea.getText(), pairs);
+
+        RecipeInfo info = new RecipeInfo(name, Integer.parseInt(servingsStr), calculateTotalCalories(qIngredients));
+        Recipe recipe = new Recipe(info, descriptionArea.getText(), qIngredients);
         boolean valid = getGui().getDatabase().insertRecipeInfo(info);
         if (!valid) return false;
+
         // create file to store full recipe
         valid = getGui().getConfig().getJsonLoader().write(recipe);
         if (!valid) {
@@ -104,13 +110,14 @@ public class RecipeController extends Controller {
         return ingredientSearchBar;
     }
 
-    private List<QuantityIngredient> getIngredientsWithQuantities() {
-        // TODO
-        return new ArrayList<>();
+    private void addSelectedIngredientToRecipe() {
+        Ingredient selected = ingredientsList.getSelectionModel().getSelectedItem();
+        if (selected == null) return;
+        if (!ingredientsTable.containsIngredient(selected))
+            ingredientsTable.addIngredient(selected);
     }
 
-    private double calculateTotalCalories(List<QuantityIngredient> pairs) {
-        // TODO
-        return 0.d;
+    private double calculateTotalCalories(List<QuantityIngredient> qIngredients) {
+        return qIngredients.stream().mapToDouble(QuantityIngredient::calories).sum();
     }
 }
