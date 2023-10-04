@@ -1,6 +1,5 @@
 package src.gui.controllers;
 
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -8,10 +7,9 @@ import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
 import javafx.util.converter.DoubleStringConverter;
 import src.data.Config;
+import src.data.Database;
 import src.data.Ingredient;
 import src.data.Measure;
-
-import java.util.List;
 
 public class IngredientController extends Controller {
 
@@ -19,14 +17,6 @@ public class IngredientController extends Controller {
     private final String carbsString = "%s carbohydrates";
     private final String fatString = "%s fat";
     private final String proteinString = "%s protein";
-
-
-    private final Task<List<Measure>> loadMeasuresTask = new Task<>() {
-        @Override protected List<Measure> call() {
-            return getGui().getDatabase().getAllMeasures();
-        }
-    };
-    private final Thread loadMeasuresThread = new Thread(loadMeasuresTask);
 
     @FXML private TextField nameField;
     @FXML private TextField measureSizeField;
@@ -50,8 +40,7 @@ public class IngredientController extends Controller {
         setMeasureBoxListeners();
         setMeasureNumber(measureNumber);
         setMeasureSizeFieldListeners();
-        setLoadMeasuresTaskListeners();
-        loadMeasures();
+        configureMeasureBox();
     }
 
     @FXML
@@ -61,7 +50,7 @@ public class IngredientController extends Controller {
         // TODO: check if ingredient name is not already present
         Ingredient ingredient = new Ingredient(
                 nameField.getText(),
-                measureBox.getValue(),
+                measureBox.getValue().singularName(),
                 Double.parseDouble(measureSizeField.getText()),
                 Double.parseDouble(calorieField.getText()),
                 getMacroTypeInfo(),
@@ -136,12 +125,6 @@ public class IngredientController extends Controller {
         });
     }
 
-    private void loadMeasures() {
-        if (loadMeasuresThread.isAlive())
-            return;
-        loadMeasuresThread.start();
-    }
-
     private void configureCalorieField() {
         calorieField.setTextFormatter(new TextFormatter<>(
                 new DoubleStringConverter(), 0.0, Config.DOUBLE_FILTER));
@@ -198,13 +181,10 @@ public class IngredientController extends Controller {
         });
     }
 
-    private void setLoadMeasuresTaskListeners() {
-        loadMeasuresTask.setOnSucceeded(t -> {
-            final List<Measure> measures = loadMeasuresTask.getValue();
-            measureBox.getItems().addAll(measures);
-            measureBox.getSelectionModel().selectFirst();
-            updateCalorieLabel(measureSizeField.getText(), measureBox.getValue().getName(measureNumber));
-        });
+    private void configureMeasureBox() {
+        measureBox.getItems().addAll(Database.getMeasuresTable());
+        measureBox.getSelectionModel().selectFirst();
+        updateCalorieLabel(measureSizeField.getText(), measureBox.getValue().getName(measureNumber));
     }
 
     private void showErrorLabel(boolean show) {

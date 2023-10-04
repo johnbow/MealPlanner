@@ -7,10 +7,11 @@ public class Database {
 
     private String dbURL;
 
-    public static final String INGREDIENTS = "Ingredients";
-    public static final String MEASURES = "Measures";
+    public static final String INGREDIENTS_TABLE = "Ingredients";
+    public static final String MEASURES_TABLE = "Measures";
 
-    private Map<String, Measure> measureMap;
+    private final static Map<String, Measure> measureMap = new TreeMap<>();
+    private final static Set<Measure> measureSet = new LinkedHashSet<>();
 
     private final List<Measure> DEFAULT_MEASURES = Arrays.asList(
             new Measure("Gram", "Grams", "g", 100.0, 1),
@@ -19,13 +20,20 @@ public class Database {
             new Measure("Liter", "Liters", "l", 1.0, 1000)
     );
 
+    public static Measure getMeasure(String name) {
+        return measureMap.get(name);
+    }
+
+    public static Set<Measure> getMeasuresTable() {
+        return measureSet;
+    }
+
     public void loadUserData(Config config) {
-        measureMap = new TreeMap<>();
         dbURL = "jdbc:sqlite:" + config.getDataDirectory() + Config.DATABASE_FILE;
         createTables();
         boolean inserted = insertInitialMeasures(DEFAULT_MEASURES);
         if (!inserted)
-            addAllMeasuresToMap();
+            getMeasuresFromTable();
     }
     private void createTables() {
         try (
@@ -69,7 +77,7 @@ public class Database {
                 pstmt.setDouble(4, measure.defaultQuantity());
                 pstmt.setDouble(5, measure.conversion());
                 pstmt.executeUpdate();
-                measureMap.put(measure.singularName(), measure);
+                addMeasure(measure);
             }
             con.commit();
         } catch (SQLException e) {
@@ -81,13 +89,6 @@ public class Database {
         return true;
     }
 
-    private void addAllMeasuresToMap() {
-        List<Measure> measures = getMeasuresFromTable();
-        assert measures != null;
-        for (Measure measure : measures)
-            measureMap.put(measure.singularName(), measure);
-    }
-
     public boolean insertIngredient(Ingredient ingredient) {
         try (
                 Connection con = DriverManager.getConnection(dbURL);
@@ -95,7 +96,7 @@ public class Database {
         ) {
             con.setAutoCommit(false);
             pstmt.setString(1, ingredient.name());
-            pstmt.setString(2, ingredient.measure().singularName());
+            pstmt.setString(2, ingredient.measureName());
             pstmt.setDouble(3, ingredient.measureSize());
             pstmt.setDouble(4, ingredient.caloriesPerMeasureSize());
             pstmt.setInt(5, ingredient.macroTypeInfo());
@@ -150,18 +151,11 @@ public class Database {
         return null;
     }
 
-    public List<Measure> getAllMeasures() {
-        if (measureMap.isEmpty())
-            return getMeasuresFromTable();
-        return new ArrayList<>(measureMap.values());
-    }
-
-    private List<Measure> getMeasuresFromTable() {
-        List<Measure> measures = new ArrayList<>();
-        try (ResultSet rs = getAllFromTable(MEASURES)) {
-            if (rs == null) return null; // should not happen
+    private void getMeasuresFromTable() {
+        try (ResultSet rs = getAllFromTable(MEASURES_TABLE)) {
+            if (rs == null) return; // should not happen
             while (rs.next()) {
-                measures.add(new Measure(
+                addMeasure(new Measure(
                         rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
@@ -172,29 +166,6 @@ public class Database {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return measures;
-    }
-
-    public List<Ingredient> getAllIngredients() {
-        List<Ingredient> ingredients = new ArrayList<>();
-        try (ResultSet rs = getAllFromTable(INGREDIENTS)) {
-            if (rs == null) return null; // should not happen
-            while (rs.next()) {
-                ingredients.add(new Ingredient(
-                        rs.getString(1),
-                        measureMap.get(rs.getString(2)),
-                        rs.getDouble(3),
-                        rs.getDouble(4),
-                        rs.getInt(5),
-                        rs.getDouble(6),
-                        rs.getDouble(7),
-                        rs.getDouble(8)
-                ));
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return ingredients;
     }
 
     public synchronized boolean addIngredientsTo(Collection<Ingredient> ingredients, String query, int limit) {
@@ -208,7 +179,7 @@ public class Database {
                 while (rs.next() && !Thread.interrupted()) {
                     ingredients.add(new Ingredient(
                             rs.getString(1),
-                            measureMap.get(rs.getString(2)),
+                            rs.getString(2),
                             rs.getDouble(3),
                             rs.getDouble(4),
                             rs.getInt(5),
@@ -222,6 +193,14 @@ public class Database {
             e.printStackTrace();
             return false;
         }
+        return true;
+    }
+
+    private static boolean addMeasure(Measure measure) {
+        if (measureSet.contains(measure))
+            return false;
+        measureMap.put(measure.singularName(), measure);
+        measureSet.add(measure);
         return true;
     }
 }

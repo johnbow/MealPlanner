@@ -42,7 +42,6 @@ public class RecipeController extends Controller {
     @FXML
     public void initialize() {
         getGui().getStage().setTitle("Add Recipe");
-        ingredientsTable.setMeasures(getGui().getDatabase().getAllMeasures());
         servingsField.setTextFormatter(new TextFormatter<>(
                 new IntegerStringConverter(), 1, Config.INT_FILTER_2_PLACES));
         addRecipeService.setOnSucceeded(t -> {

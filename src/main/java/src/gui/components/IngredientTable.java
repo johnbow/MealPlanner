@@ -7,13 +7,14 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.text.TextAlignment;
 import javafx.util.converter.DoubleStringConverter;
+
+import src.data.Database;
 import src.data.Ingredient;
 import src.data.Measure;
 import src.data.QuantityIngredient;
 import src.util.Converters;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class IngredientTable extends TableView<IngredientTable.Row> {
@@ -23,8 +24,8 @@ public class IngredientTable extends TableView<IngredientTable.Row> {
     private final TableColumn<Row, Measure> measureCol;
     private final TableColumn<Row, String> calorieCol;
 
-    private Converters.MeasureStringConverter measureStringConverter;
-    private Collection<Measure> measures;
+    private final Converters.MeasureStringConverter measureStringConverter
+            = new Converters.MeasureStringConverter(Database.getMeasuresTable());
 
     public IngredientTable() {
         getStyleClass().add("ingredient-table");
@@ -51,7 +52,7 @@ public class IngredientTable extends TableView<IngredientTable.Row> {
 
     private TableCell<Row, Measure> createMeasureCell(TableColumn<Row, Measure> col) {
         ComboBoxTableCell<Row, Measure> cell = new ComboBoxTableCell<>(measureStringConverter);
-        cell.getItems().addAll(measures);
+        cell.getItems().addAll(Database.getMeasuresTable());
         cell.setTextAlignment(TextAlignment.LEFT);
         cell.setStyle("-fx-alignment: CENTER-LEFT;");
         return cell;
@@ -87,12 +88,6 @@ public class IngredientTable extends TableView<IngredientTable.Row> {
         getItems().forEach(item -> qIngredients.add(item.toQuantityIngredient()));
         return qIngredients;
     }
-
-    public void setMeasures(Collection<Measure> measures) {
-        this.measures = measures;
-        this.measureStringConverter = new Converters.MeasureStringConverter(this.measures);
-    }
-
 
     static class Row {
         final ReadOnlyObjectWrapper<Ingredient> ingredient;
