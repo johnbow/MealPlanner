@@ -23,10 +23,9 @@ public class IngredientTable extends TableView<IngredientTable.Row> {
     private final TableColumn<Row, Double> quantityCol;
     private final TableColumn<Row, Measure> measureCol;
     private final TableColumn<Row, String> calorieCol;
-    private final TableColumn joinedCol;
 
-    private final Converters.MeasureStringConverter measureStringConverter
-            = new Converters.MeasureStringConverter(Database.getMeasuresTable());
+    private final Converters.MeasureAbbrevStringConverter measureStringConverter
+            = new Converters.MeasureAbbrevStringConverter();
 
     public IngredientTable() {
         getStyleClass().add("ingredient-table");
@@ -36,7 +35,6 @@ public class IngredientTable extends TableView<IngredientTable.Row> {
         quantityCol = new TableColumn<>("quantity");
         measureCol = new TableColumn<>("measure");
         calorieCol = new TableColumn<>("Calories");
-        joinedCol = new TableColumn("Quantity");
 
         quantityCol.setCellFactory(this::createQuantityCell);
         measureCol.setCellFactory(this::createMeasureCell);
@@ -46,20 +44,15 @@ public class IngredientTable extends TableView<IngredientTable.Row> {
         measureCol.setCellValueFactory(col -> col.getValue().measure);
         calorieCol.setCellValueFactory(col -> col.getValue().calories.asString("%.1f kcal"));
 
-        quantityCol.getStyleClass().add("joined-cols");
-        measureCol.getStyleClass().add("joined-cols");
-
-        joinedCol.getColumns().add(quantityCol);
-        joinedCol.getColumns().add(measureCol);
-
         getColumns().add(nameCol);
-        getColumns().add(joinedCol);
+        getColumns().add(quantityCol);
+        getColumns().add(measureCol);
         getColumns().add(calorieCol);
     }
 
     private TableCell<Row, Measure> createMeasureCell(TableColumn<Row, Measure> col) {
         ComboBoxTableCell<Row, Measure> cell = new ComboBoxTableCell<>(measureStringConverter);
-        cell.getItems().addAll(Database.getMeasuresTable());
+        cell.getItems().addAll(Database.getMeasures());
         cell.setTextAlignment(TextAlignment.LEFT);
         cell.setStyle("-fx-alignment: CENTER-LEFT;");
         return cell;
@@ -111,9 +104,9 @@ public class IngredientTable extends TableView<IngredientTable.Row> {
             this.measure.addListener((observable, oldValue, newValue) -> {
                 this.calories.set(this.ingredient.get().calories(newValue, this.quantity.get()));
             });
-            this.quantity.addListener((observable, oldValue, newValue) ->
-                this.calories.set(this.ingredient.get().calories(measure.get(), (double) newValue))
-            );
+            this.quantity.addListener((observable, oldValue, newValue) -> {
+                this.calories.set(this.ingredient.get().calories(measure.get(), (double) newValue));
+            });
         }
 
         Row(Ingredient ingredient) {

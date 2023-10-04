@@ -10,6 +10,7 @@ import src.data.Config;
 import src.data.Database;
 import src.data.Ingredient;
 import src.data.Measure;
+import src.util.Converters;
 
 public class IngredientController extends Controller {
 
@@ -29,7 +30,7 @@ public class IngredientController extends Controller {
     @FXML private Label carbsLabel, proteinLabel, fatLabel;
     @FXML private VBox macrosBox;
 
-    private Measure.Number measureNumber = Measure.Number.PLURAL;
+    private Measure.Number measureNumber = Measure.Number.NOT_DEFINED;
     private boolean macrosVisible = false;
 
     @FXML
@@ -107,22 +108,9 @@ public class IngredientController extends Controller {
      * Sets if measures should have their singular or plural names.
      */
     private void setMeasureNumber(Measure.Number number) {
-        measureBox.setConverter(new StringConverter<Measure>() {
-            @Override
-            public String toString(Measure object) {
-                if (object == null) return null;
-                return object.getName(number);
-            }
-
-            @Override
-            public Measure fromString(String string) {
-                for (Measure measure : measureBox.getItems()) {
-                    if (measure.getName(number).equals(string))
-                        return measure;
-                }
-                return null;
-            }
-        });
+        if (number == this.measureNumber) return;
+        measureNumber = number;
+        measureBox.setConverter(new Converters.MeasureStringConverter(measureNumber));
     }
 
     private void configureCalorieField() {
@@ -140,11 +128,11 @@ public class IngredientController extends Controller {
 
     private void configureMacros() {
         showMacros(macrosVisible);
-        carbsField.setTextFormatter(new TextFormatter<Double>(
+        carbsField.setTextFormatter(new TextFormatter<>(
                 new DoubleStringConverter(), 0.0, Config.DOUBLE_FILTER));
-        proteinField.setTextFormatter(new TextFormatter<Double>(
+        proteinField.setTextFormatter(new TextFormatter<>(
                 new DoubleStringConverter(), 0.0, Config.DOUBLE_FILTER));
-        fatField.setTextFormatter(new TextFormatter<Double>(
+        fatField.setTextFormatter(new TextFormatter<>(
                 new DoubleStringConverter(), 0.0, Config.DOUBLE_FILTER));
     }
 
@@ -169,20 +157,17 @@ public class IngredientController extends Controller {
                 new DoubleStringConverter(), 0.0, Config.DOUBLE_FILTER));
         measureSizeField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.isBlank()) return;
-            Measure.Number oldMeasureNumber = measureNumber;
             if (Math.abs(Double.parseDouble(newValue) - 1.0) < 0.0001)
-                measureNumber = Measure.Number.SINGULAR;
+                setMeasureNumber(Measure.Number.SINGULAR);
             else
-                measureNumber = Measure.Number.PLURAL;
-            if (measureNumber != oldMeasureNumber)
-                setMeasureNumber(measureNumber);
+                setMeasureNumber(Measure.Number.PLURAL);
             if (measureBox.getValue() != null)
                 updateCalorieLabel(newValue, measureBox.getValue().getName(measureNumber));
         });
     }
 
     private void configureMeasureBox() {
-        measureBox.getItems().addAll(Database.getMeasuresTable());
+        measureBox.getItems().addAll(Database.getMeasures());
         measureBox.getSelectionModel().selectFirst();
         updateCalorieLabel(measureSizeField.getText(), measureBox.getValue().getName(measureNumber));
     }

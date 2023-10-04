@@ -8,7 +8,7 @@ public record Measure(
         double conversion   // weight in grams or milliliters
 ) {
     public enum Number {
-        SINGULAR, PLURAL
+        SINGULAR, PLURAL, NOT_DEFINED
     }
 
     public String getName(Measure.Number number) {
@@ -22,6 +22,10 @@ public record Measure(
 
     public double convertQuantity(Measure other, double quantity) {
         return quantity * (other.conversion / this.conversion);
+    }
+
+    public double convertQuantityDefault(double quantity) {
+        return quantity * this.conversion;
     }
 
     @Override

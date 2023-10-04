@@ -24,7 +24,7 @@ public class Database {
         return measureMap.get(name);
     }
 
-    public static Set<Measure> getMeasuresTable() {
+    public static Set<Measure> getMeasures() {
         return measureSet;
     }
 
