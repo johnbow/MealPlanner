@@ -72,9 +72,9 @@ public final class SQLStatements {
             """;
 
 
-    static final String SELECT_ALL_FROM_TABLE =
+    static final String SELECT_ALL_MEASURES =
             """
-            SELECT * FROM ?;
+            SELECT * FROM measures;
             """;
 
     static final String SELECT_INGREDIENTS_BY_NAME =
@@ -85,8 +85,21 @@ public final class SQLStatements {
             LIMIT ?;
             """;
 
+    static final String SELECT_RECIPE_INFOS_BY_NAME =
+            """
+            SELECT *
+            FROM Recipe_Info
+            WHERE name LIKE ?
+            LIMIT ?;
+            """;
+
     static final String EXISTS_ANY_MEASURE =
             """
             SELECT COUNT(*) FROM (SELECT 0 FROM Measures LIMIT 1);
+            """;
+
+    static final String DELETE_RECIPE_INFO =
+            """
+            DELETE FROM Recipe_Info WHERE name = ?;
             """;
 }

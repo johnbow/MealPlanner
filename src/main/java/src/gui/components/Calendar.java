@@ -1,25 +1,34 @@
 package src.gui.components;
 
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.*;
+import src.data.RecipeInfo;
+import src.data.WeekTemplate;
+import src.gui.GUI;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class Calendar extends GridPane {
 
-    private WeekdayBox[] weekdays = new WeekdayBox[7];
+    private final WeekdayBox[] weekdayBoxes = new WeekdayBox[7];
+    private final WeekdayCell[] weekdayCells = new WeekdayCell[7];
+
     private LocalDate firstDayOfWeek;
     private DayOfWeek weekStart;
     private Locale locale;
     private Label dateLabel;
+    private GUI gui;
+    private Service<WeekTemplate> weekLoader;
 
     public Calendar() {
         setAlignment(Pos.CENTER);
@@ -33,17 +42,26 @@ public class Calendar extends GridPane {
         for (int i = 0; i < 7; i++) {
             ColumnConstraints col = new ColumnConstraints();
             col.setFillWidth(true);
-            col.setHgrow(Priority.ALWAYS);
+            col.setPercentWidth(100.0 / 7.0);
             getColumnConstraints().add(col);
-            weekdays[i] = new WeekdayBox();
-            add(weekdays[i], i, 0);
+            weekdayBoxes[i] = new WeekdayBox();
+            add(weekdayBoxes[i], i, 0);
+            weekdayCells[i] = new WeekdayCell();
+            add(weekdayCells[i], i, 1);
         }
+        initWeekLoader();
 
         // Standard values:
         setWeekStart(DayOfWeek.MONDAY);
         setLocale(Locale.ENGLISH);
+    }
 
-        setCurrentWeek();
+    public void setGui(GUI gui) {
+        this.gui = gui;
+        setWeekStart(gui.getConfig().getWeekStart());
+        setLocale(gui.getConfig().getLanguage());
+        for (WeekdayCell cell : weekdayCells)
+            cell.setGui(gui);
     }
 
     public void setWeekStart(DayOfWeek day) {
@@ -59,9 +77,10 @@ public class Calendar extends GridPane {
     }
 
     public void setWeek(LocalDate firstDayOfWeek) {
+        if (this.firstDayOfWeek != null && firstDayOfWeek.isEqual(this.firstDayOfWeek)) return;
         this.firstDayOfWeek = firstDayOfWeek;
         for (int i = 0; i < 7; i++) {
-            weekdays[i].setDate(firstDayOfWeek.plusDays(i), locale);
+            weekdayBoxes[i].setDate(firstDayOfWeek.plusDays(i), locale);
         }
         if (dateLabel != null) {
             String date1 = getMonthAndYear(firstDayOfWeek);
@@ -71,6 +90,9 @@ public class Calendar extends GridPane {
             else
                 dateLabel.setText(date1 + " - " + date2);
         }
+        for (WeekdayCell cell : weekdayCells)
+            cell.getChildren().clear();
+        weekLoader.restart();
     }
 
     private String getMonthAndYear(LocalDate date) {
@@ -85,11 +107,57 @@ public class Calendar extends GridPane {
     }
 
     public void setNextWeek() {
+        saveDisplayedWeek();
         setWeek(firstDayOfWeek.with(TemporalAdjusters.next(weekStart)));
     }
 
     public void setPreviousWeek() {
+        saveDisplayedWeek();
         setWeek(firstDayOfWeek.with(TemporalAdjusters.previous(weekStart)));
+    }
+
+    public WeekTemplate getWeek() {
+        List<List<RecipeInfo>> days = new ArrayList<>(7);
+        for (WeekdayCell cell : weekdayCells) {
+            days.add(new ArrayList<>());
+            for (Node node : cell.getChildren()) {
+                if (node instanceof RecipeInfoCell recipeCell)
+                    days.get(days.size() - 1).add(recipeCell.getRecipeInfo());
+            }
+        }
+        return new WeekTemplate(firstDayOfWeek.toString(), days);
+    }
+
+    public void saveWeek(WeekTemplate week) {
+        if (!week.isEmpty())
+            gui.getConfig().getJsonLoader().write(week);
+    }
+
+    public void saveDisplayedWeek() {
+        saveWeek(getWeek());
+    }
+
+    private void setWeekTemplate(WeekTemplate week) {
+        if (week == null) return;
+        for (int i = 0; i < 7; i++) {
+            for (RecipeInfo recipeInfo : week.days().get(i))
+                weekdayCells[i].addRecipeInfo(recipeInfo);
+        }
+    }
+
+    private void initWeekLoader() {
+        weekLoader = new Service<>() {
+            @Override
+            protected Task<WeekTemplate> createTask() {
+                return new Task<>() {
+                    @Override
+                    protected WeekTemplate call() {
+                        return gui.getConfig().getJsonLoader().readWeek(firstDayOfWeek.toString());
+                    }
+                };
+            }
+        };
+        weekLoader.setOnSucceeded(event -> setWeekTemplate(weekLoader.getValue()));
     }
 
 }

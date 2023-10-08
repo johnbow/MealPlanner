@@ -6,6 +6,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import src.data.Config;
 import src.data.Database;
+import src.data.RecipeInfo;
 import src.gui.controllers.Controller;
 import src.gui.controllers.Screen;
 
@@ -13,35 +14,36 @@ import java.io.IOException;
 
 public class GUI {
 
-    private final Stage stage;
+    private final Stage mainStage;
     private final Config config;
     private final Database database;
 
+    private RecipeInfo dragContent;
     private Controller controller;
     private Screen currentScreen;
 
-    public GUI(Stage stage, Config config, Database database) {
-        this.stage = stage;
+    public GUI(Stage mainStage, Config config, Database database) {
+        this.mainStage = mainStage;
         this.config = config;
         this.database = database;
         this.currentScreen = null;
     }
 
     public void loadApplication() {
-        stage.setWidth(config.getInitialWidth());
-        stage.setHeight(config.getInitialHeight());
+        mainStage.setWidth(config.getInitialWidth());
+        mainStage.setHeight(config.getInitialHeight());
         loadScreen(Screen.CALENDAR);
-        stage.show();
+        mainStage.show();
     }
 
     public void loadScreen(Screen screen) {
         try {
             if (controller != null)
-                controller.closeAllDialogs();
+                controller.onClose();
             Controller newController = screen.instantiateController(this);
             Scene scene = ResourceLoader.loadScene(newController);
-            stage.setScene(scene);
-            newController.setStage(stage);
+            mainStage.setScene(scene);
+            newController.setStage(mainStage);
             forceRefresh();
             controller = newController;
             currentScreen = screen;
@@ -58,7 +60,7 @@ public class GUI {
             Scene scene = ResourceLoader.loadScene(dialogController);
             Stage dialog = new Stage(stageStyle);
             dialog.initModality(modality);
-            dialog.initOwner(stage);
+            dialog.initOwner(mainStage);
             dialog.setScene(scene);
             dialogController.setStage(dialog);
             return dialogController;
@@ -69,8 +71,8 @@ public class GUI {
         return null;
     }
 
-    public Stage getStage() {
-        return stage;
+    public Stage getMainStage() {
+        return mainStage;
     }
 
     public Config getConfig() {
@@ -94,13 +96,21 @@ public class GUI {
         If the stage is maximized, changing window size has no effect.
         Instead, un-maximize and maximize again
          */
-        stage.setWidth(stage.getWidth() + 0.0001);
-        if (stage.isMaximized()) {
-            stage.hide();
-            stage.setMaximized(false);
-            stage.setMaximized(true);
-            stage.show();
+        mainStage.setWidth(mainStage.getWidth() + 0.0001);
+        if (mainStage.isMaximized()) {
+            mainStage.hide();
+            mainStage.setMaximized(false);
+            mainStage.setMaximized(true);
+            mainStage.show();
         }
+    }
+
+    public void setDragContent(RecipeInfo recipeInfo) {
+        dragContent = recipeInfo;
+    }
+
+    public RecipeInfo getDragContent() {
+        return dragContent;
     }
 
 }

@@ -1,22 +1,27 @@
 package src.data;
 
 import javafx.scene.control.TextFormatter;
+import javafx.scene.image.Image;
 import net.harawata.appdirs.AppDirs;
 import net.harawata.appdirs.AppDirsFactory;
+import src.gui.ResourceLoader;
 
 import java.io.File;
+import java.time.DayOfWeek;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.function.UnaryOperator;
 
 public final class Config {
 
-    public static final boolean DO_CLEAN_INSTALL = true;
+    public static final boolean DO_CLEAN_INSTALL = false;
 
     public static final String APPLICATION_NAME = "MealPlanner";
     public static final String AUTHOR_NAME = "Klein";
     public static final String CONFIG_FILE = "config";
     public static final String DATABASE_FILE = "food.db";
     public static final String RECIPE_FOLDER = "recipes/";
+    public static final String WEEK_FOLDER = "weeks/";
 
     public static final UnaryOperator<TextFormatter.Change> INT_FILTER_2_PLACES = change -> {
         String newText = change.getControlNewText();
@@ -33,11 +38,15 @@ public final class Config {
         return null;
     };
 
+    private static Image dragAndDropImage;
+
     // configurable:
     private int initialHeight = 600;
     private int initialWidth = 800;
-    private int listViewResultsLimit = 20;
+    private int queryResultsLimit = 20;
     private String dataDirectory = "";
+    private Locale language = Locale.ENGLISH;
+    private DayOfWeek weekStart = DayOfWeek.MONDAY;
 
     private transient String configDirectory;
     private transient JSONLoader jsonLoader;
@@ -45,6 +54,7 @@ public final class Config {
     Config() {}
 
     public static Config loadConfig() {
+        dragAndDropImage = ResourceLoader.loadImage("dragAndDrop.png", 100, 100, true, true);
         AppDirs appDirs = AppDirsFactory.getInstance();
         String configDir = appDirs.getUserConfigDir(APPLICATION_NAME, "", AUTHOR_NAME);
         JSONLoader json = new JSONLoader(configDir);
@@ -70,13 +80,28 @@ public final class Config {
 
     private static void deleteConfigFile(String configDir) {
         File configFile = new File(configDir + CONFIG_FILE + JSONLoader.EXTENSION);
-        System.out.println(configFile.isFile());
         if (configFile.isFile() && configFile.delete())
             System.out.printf("Deleted %s.\n", configFile.getName());
     }
 
     public void save() {
         getJsonLoader().write(this);
+    }
+
+    public Locale getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(Locale language) {
+        this.language = language;
+    }
+
+    public DayOfWeek getWeekStart() {
+        return weekStart;
+    }
+
+    public void setWeekStart(DayOfWeek weekStart) {
+        this.weekStart = weekStart;
     }
 
     public String getConfigDirectory() {
@@ -87,12 +112,12 @@ public final class Config {
         this.configDirectory = configDirectory;
     }
 
-    public int getListViewResultsLimit() {
-        return listViewResultsLimit;
+    public int getQueryResultsLimit() {
+        return queryResultsLimit;
     }
 
-    public void setListViewResultsLimit(int listViewResultsLimit) {
-        this.listViewResultsLimit = listViewResultsLimit;
+    public void setQueryResultsLimit(int queryResultsLimit) {
+        this.queryResultsLimit = queryResultsLimit;
     }
 
     public JSONLoader getJsonLoader() {
@@ -139,6 +164,10 @@ public final class Config {
     @Override
     public int hashCode() {
         return Objects.hash(initialHeight, initialWidth, dataDirectory, configDirectory);
+    }
+
+    public static Image getDragAndDropImage() {
+        return dragAndDropImage;
     }
 
 }

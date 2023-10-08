@@ -6,7 +6,10 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import src.gui.controllers.Controller;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.Objects;
 
@@ -26,7 +29,36 @@ public class ResourceLoader {
      * @return The specified image.
      */
     public static Image loadImage(String filename) {
-        return new Image(IMAGE_PATH + filename);
+        String path = Objects.requireNonNull(ResourceLoader.class.getResource(IMAGE_PATH + filename)).getPath();
+        InputStream stream;
+        try {
+            stream = new FileInputStream(path);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return new Image(stream);
+    }
+
+    /**
+     * Loads image from resource folder with specified parameters.
+     * @param filename Name of image with file extension, e.g. 'image.png'
+     * @return The specified image.
+     */
+    public static Image loadImage(String filename,
+                                  double requestedWidth,
+                                  double requestedHeight,
+                                  boolean preserveRatio,
+                                  boolean smooth) {
+        String path = Objects.requireNonNull(ResourceLoader.class.getResource(IMAGE_PATH + filename)).getPath();
+        InputStream stream;
+        try {
+            stream = new FileInputStream(path);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return new Image(stream, requestedWidth, requestedHeight, preserveRatio, smooth);
     }
 
     /**

@@ -7,9 +7,6 @@ public class Database {
 
     private String dbURL;
 
-    public static final String INGREDIENTS_TABLE = "Ingredients";
-    public static final String MEASURES_TABLE = "Measures";
-
     private final static Map<String, Measure> measureMap = new TreeMap<>();
     private final static Set<Measure> measureSet = new LinkedHashSet<>();
 
@@ -35,6 +32,7 @@ public class Database {
         if (!inserted)
             getMeasuresFromTable();
     }
+
     private void createTables() {
         try (
                 Connection con = DriverManager.getConnection(dbURL);
@@ -134,25 +132,31 @@ public class Database {
     }
 
     public boolean removeRecipeInfo(RecipeInfo recipeInfo) {
-        // TODO
-        return true;
-    }
-
-    private ResultSet getAllFromTable(String table) {
         try (
                 Connection con = DriverManager.getConnection(dbURL);
-                PreparedStatement pstmt  = con.prepareStatement(SQLStatements.SELECT_ALL_FROM_TABLE);
+                PreparedStatement pstmt = con.prepareStatement(SQLStatements.DELETE_RECIPE_INFO)
         ) {
-            pstmt.setString(1, table);
-            return pstmt.executeQuery();
+            pstmt.setString(1, recipeInfo.name());
+            int rowCount = pstmt.executeUpdate();
+            if (rowCount > 0) {
+                System.out.printf("Deleted %s from database.\n", recipeInfo.toString());
+                return true;
+            } else {
+                System.err.printf("Couldn't delete %s from database.\n", recipeInfo.toString());
+                return false;
+            }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
+            return false;
         }
-        return null;
     }
 
     private void getMeasuresFromTable() {
-        try (ResultSet rs = getAllFromTable(MEASURES_TABLE)) {
+        try (
+                Connection con = DriverManager.getConnection(dbURL);
+                Statement stmt = con.createStatement();
+                ResultSet rs = stmt.executeQuery(SQLStatements.SELECT_ALL_MEASURES)
+        ) {
             if (rs == null) return; // should not happen
             while (rs.next()) {
                 addMeasure(new Measure(
@@ -186,6 +190,30 @@ public class Database {
                             rs.getDouble(6),
                             rs.getDouble(7),
                             rs.getDouble(8)
+                    ));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public synchronized boolean addRecipeInfosTo(Collection<RecipeInfo> recipes, String query, int limit) {
+        try(
+                Connection con = DriverManager.getConnection(dbURL);
+                PreparedStatement pstmt = con.prepareStatement(SQLStatements.SELECT_RECIPE_INFOS_BY_NAME);
+        ) {
+            pstmt.setString(1, query + "%");
+            pstmt.setInt(2, limit);
+            try(ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next() && !Thread.interrupted()) {
+                    recipes.add(new RecipeInfo(
+                            rs.getString(1),
+                            rs.getString(2),
+                            rs.getInt(3),
+                            rs.getDouble(4)
                     ));
                 }
             }

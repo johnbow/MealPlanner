@@ -6,3 +6,8 @@
 .date-label {
 
 }
+
+.recipe-info-cell {
+    -fx-border-width: 1;
+    -fx-border-color: black;
+}

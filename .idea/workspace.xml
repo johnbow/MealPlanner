@@ -5,13 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4c0eac42-ae49-4629-a0fe-4ef6521f7fba" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/src/data/WeekTemplate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/src/gui/components/RecipeDisplay.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/src/gui/components/RecipeInfoCell.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/src/gui/components/WeekdayCell.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/MainApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/MainApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/data/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/data/Config.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/src/data/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/data/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/src/data/Measure.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/data/Measure.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/data/JSONLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/data/JSONLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/data/RecipeInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/data/RecipeInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/data/SQLStatements.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/data/SQLStatements.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/GUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/ResourceLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/ResourceLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/components/Calendar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/components/Calendar.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/components/IngredientTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/components/IngredientTable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/controllers/IngredientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/controllers/IngredientController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/src/util/Converters.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/util/Converters.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/css/RecipeScreen.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/css/RecipeScreen.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/controllers/CalendarController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/controllers/CalendarController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/controllers/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/controllers/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/controllers/RecipeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/controllers/RecipeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/util/Query.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/util/Query.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/util/QueryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/util/QueryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/css/CalendarScreen.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/css/CalendarScreen.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/CalendarScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/CalendarScreen.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,9 +80,9 @@
       <list>
         <option value="Enum" />
         <option value="FxmlFile" />
-        <option value="Record" />
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
+        <option value="Record" />
       </list>
     </option>
   </component>
@@ -350,7 +365,14 @@
       <option name="project" value="LOCAL" />
       <updated>1696427214838</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="updated StringConverters">
+      <created>1696449763173</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1696449763173</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -371,6 +393,7 @@
     <MESSAGE value="added ingredientTable&#10;- ingredients can be added to table&#10;- recipe can be correctly added" />
     <MESSAGE value="changed measure storage&#10;- ingredients store only the measure name&#10;- Database holds measures as static variables&#10;- accessors to measures are static" />
     <MESSAGE value="connected quantity and measure columns" />
-    <option name="LAST_COMMIT_MESSAGE" value="connected quantity and measure columns" />
+    <MESSAGE value="updated StringConverters" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated StringConverters" />
   </component>
 </project>

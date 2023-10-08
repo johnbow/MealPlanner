@@ -9,16 +9,12 @@ import java.util.Set;
 public class QueryService<T> extends Service<Boolean> {
 
     private final Query<T> query;
-
     private final Set<T> resultSet;
+    private final int resultSetCapacity;
     private String searchText;
 
-    public QueryService(Query<T> query) {
-        this.query = query;
-        resultSet = new HashSet<>();
-    }
-
     public QueryService(int resultSetCapacity, Query<T> query) {
+        this.resultSetCapacity = resultSetCapacity;
         this.query = query;
         resultSet = new HashSet<>(resultSetCapacity);
     }
@@ -29,7 +25,7 @@ public class QueryService<T> extends Service<Boolean> {
             @Override
             protected Boolean call() throws Exception {
                 resultSet.clear();
-                return query.query(resultSet, searchText);
+                return query.query(resultSet, searchText, resultSetCapacity);
             }
         };
     }

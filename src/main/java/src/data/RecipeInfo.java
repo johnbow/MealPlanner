@@ -15,7 +15,12 @@ public record RecipeInfo(
         return total_calories / servings;
     }
 
+    public RecipeInfo changeServings(int newServings) {
+        return new RecipeInfo(name, filename, newServings, (total_calories / servings) * newServings);
+    }
+
     public static String generateFilename(String name) {
         return name.replaceAll("\\s+", "");
     }
+
 }

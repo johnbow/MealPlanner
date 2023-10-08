@@ -41,7 +41,7 @@ public class RecipeController extends Controller {
 
     @FXML
     public void initialize() {
-        getGui().getStage().setTitle("Add Recipe");
+        getGui().getMainStage().setTitle("Add Recipe");
         servingsField.setTextFormatter(new TextFormatter<>(
                 new IntegerStringConverter(), 1, Config.INT_FILTER_2_PLACES));
         addRecipeService.setOnSucceeded(t -> {
@@ -73,8 +73,8 @@ public class RecipeController extends Controller {
 
     private void configureSearchBar() {
         ingredientSearchBar.setDisplay(ingredientsList.getItems());
-        int capacity = getGui().getConfig().getListViewResultsLimit();
-        ingredientSearchBar.setSearchQuery(new QueryService<>(capacity, (resultSet, searchText) ->
+        ingredientSearchBar.setSearchQuery(new QueryService<>(
+                getGui().getConfig().getQueryResultsLimit(), (resultSet, searchText, capacity) ->
                 getGui().getDatabase().addIngredientsTo(resultSet, searchText, capacity)));
         ingredientsList.setCellFactory(ingredientListView -> new IngredientListViewCell());
         ingredientsList.setOnMouseClicked(click -> {

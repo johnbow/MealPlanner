@@ -31,6 +31,7 @@ public class IngredientTable extends TableView<IngredientTable.Row> {
         getStyleClass().add("ingredient-table");
         setEditable(true);
         getSelectionModel().setCellSelectionEnabled(true);
+
         nameCol = new TableColumn<>("Name");
         quantityCol = new TableColumn<>("quantity");
         measureCol = new TableColumn<>("measure");

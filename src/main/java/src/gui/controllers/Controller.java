@@ -75,7 +75,12 @@ public abstract class Controller {
 
     public void closeThisDialog() {
         if(!isDialog) return;
+        onClose();
         stage.close();
+    }
+
+    public void onClose() {
+        closeAllDialogs();
     }
 
     public void setDialog(boolean isDialog) {
