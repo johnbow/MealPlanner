@@ -12,19 +12,18 @@ import src.data.Config;
 import src.data.RecipeInfo;
 import src.gui.GUI;
 
-public class RecipeInfoCell extends VBox {
+public class RecipeInfoBox extends VBox {
 
     private GUI gui;
     private RecipeInfo recipeInfo;
     private Label header;
     private ImageView image;
 
-    public RecipeInfoCell(GUI gui) {
+    public RecipeInfoBox(GUI gui) {
         this.gui = gui;
         header = new Label();
         image = new ImageView();
 
-        //image.resize(40, 30);
         setAlignment(Pos.CENTER);
         header.setTextAlignment(TextAlignment.CENTER);
         header.setWrapText(true);
@@ -36,10 +35,10 @@ public class RecipeInfoCell extends VBox {
 
         setDragSource();
 
-        getStyleClass().add("recipe-info-cell");
+        getStyleClass().add("recipe-info-box");
     }
 
-    public RecipeInfoCell(GUI gui, RecipeInfo recipeInfo) {
+    public RecipeInfoBox(GUI gui, RecipeInfo recipeInfo) {
         this(gui);
         setRecipeInfo(recipeInfo);
     }

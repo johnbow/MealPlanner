@@ -64,7 +64,7 @@ public class RecipeDisplay extends ScrollPane {
     }
 
     private void onRecipeInfoAdded(RecipeInfo recipeInfo) {
-        RecipeInfoCell cell = new RecipeInfoCell(gui, recipeInfo);
+        RecipeInfoBox cell = new RecipeInfoBox(gui, recipeInfo);
         cell.setPadding(new Insets(0, 5, 0, 5));
         contentDisplay.getChildren().add(cell);
     }
@@ -76,8 +76,8 @@ public class RecipeDisplay extends ScrollPane {
     }
 
     private void updateRecipeInfo(int position) {
-        RecipeInfoCell recipeInfoCell = (RecipeInfoCell) contentDisplay.getChildren().get(position);
-        recipeInfoCell.setRecipeInfo(items.get(position));
+        RecipeInfoBox recipeInfoBox = (RecipeInfoBox) contentDisplay.getChildren().get(position);
+        recipeInfoBox.setRecipeInfo(items.get(position));
     }
 
 }

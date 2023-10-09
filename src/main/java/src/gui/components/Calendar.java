@@ -21,7 +21,7 @@ import java.util.Locale;
 public class Calendar extends GridPane {
 
     private final WeekdayBox[] weekdayBoxes = new WeekdayBox[7];
-    private final WeekdayCell[] weekdayCells = new WeekdayCell[7];
+    private final CalendarColumn[] calendarColumns = new CalendarColumn[7];
 
     private LocalDate firstDayOfWeek;
     private DayOfWeek weekStart;
@@ -46,8 +46,8 @@ public class Calendar extends GridPane {
             getColumnConstraints().add(col);
             weekdayBoxes[i] = new WeekdayBox();
             add(weekdayBoxes[i], i, 0);
-            weekdayCells[i] = new WeekdayCell();
-            add(weekdayCells[i], i, 1);
+            calendarColumns[i] = new CalendarColumn();
+            add(calendarColumns[i], i, 1);
         }
         initWeekLoader();
 
@@ -60,7 +60,7 @@ public class Calendar extends GridPane {
         this.gui = gui;
         setWeekStart(gui.getConfig().getWeekStart());
         setLocale(gui.getConfig().getLanguage());
-        for (WeekdayCell cell : weekdayCells)
+        for (CalendarColumn cell : calendarColumns)
             cell.setGui(gui);
     }
 
@@ -90,7 +90,7 @@ public class Calendar extends GridPane {
             else
                 dateLabel.setText(date1 + " - " + date2);
         }
-        for (WeekdayCell cell : weekdayCells)
+        for (CalendarColumn cell : calendarColumns)
             cell.getChildren().clear();
         weekLoader.restart();
     }
@@ -118,10 +118,10 @@ public class Calendar extends GridPane {
 
     public WeekTemplate getWeek() {
         List<List<RecipeInfo>> days = new ArrayList<>(7);
-        for (WeekdayCell cell : weekdayCells) {
+        for (CalendarColumn cell : calendarColumns) {
             days.add(new ArrayList<>());
             for (Node node : cell.getChildren()) {
-                if (node instanceof RecipeInfoCell recipeCell)
+                if (node instanceof RecipeInfoBox recipeCell)
                     days.get(days.size() - 1).add(recipeCell.getRecipeInfo());
             }
         }
@@ -141,7 +141,7 @@ public class Calendar extends GridPane {
         if (week == null) return;
         for (int i = 0; i < 7; i++) {
             for (RecipeInfo recipeInfo : week.days().get(i))
-                weekdayCells[i].addRecipeInfo(recipeInfo);
+                calendarColumns[i].addRecipeInfo(recipeInfo);
         }
     }
 

@@ -7,7 +7,14 @@
 
 }
 
-.recipe-info-cell {
+.recipe-info-box {
     -fx-border-width: 1;
     -fx-border-color: black;
+}
+
+.highlight-region {
+    -fx-background-color: "LIGHTGRAY";
+    -fx-pref-height: 50;
+    -fx-pref-width: 100%;
+    -fx-opacity: 0.5;
 }

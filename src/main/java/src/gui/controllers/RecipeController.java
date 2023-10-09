@@ -10,6 +10,7 @@ import javafx.stage.StageStyle;
 import javafx.util.converter.IntegerStringConverter;
 
 import src.data.*;
+import src.gui.components.ImageSelector;
 import src.gui.components.IngredientListViewCell;
 import src.gui.components.IngredientTable;
 import src.util.QueryService;
@@ -38,6 +39,7 @@ public class RecipeController extends Controller {
     @FXML private ListView<Ingredient> ingredientsList;
     @FXML private TextArea descriptionArea;
     @FXML private IngredientTable ingredientsTable;
+    @FXML private ImageSelector imageSelector;
 
     @FXML
     public void initialize() {

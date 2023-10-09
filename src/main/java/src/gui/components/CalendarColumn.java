@@ -4,15 +4,20 @@ import javafx.geometry.Insets;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import src.data.RecipeInfo;
 import src.gui.GUI;
 
-public class WeekdayCell extends VBox {
+public class CalendarColumn extends VBox {
 
     private GUI gui;
+    private final Region highlightBox;
 
-    public WeekdayCell() {
+    public CalendarColumn() {
+        highlightBox = new Region();
+        highlightBox.getStyleClass().add("highlight-region");
+
         setDragTarget();
         setPadding(new Insets(5));
         setSpacing(5);
@@ -40,16 +45,15 @@ public class WeekdayCell extends VBox {
     }
 
     private void startHighlighting(DragEvent event) {
-
+        getChildren().add(highlightBox);
     }
 
     private void stopHighlighting(DragEvent event) {
-
+        // always uses the same highlightBox:
+        getChildren().removeIf(node -> node == highlightBox);
     }
 
     public void addRecipeInfo(RecipeInfo recipeInfo) {
-        RecipeInfoCell cell = new RecipeInfoCell(gui, recipeInfo);
-        // cell.maxWidthProperty().bind(widthProperty());
-        getChildren().add(cell);
+        getChildren().add(new RecipeInfoBox(gui, recipeInfo));
     }
 }
