@@ -5,15 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4c0eac42-ae49-4629-a0fe-4ef6521f7fba" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/src/gui/components/ImageSelector.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/components/Calendar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/components/Calendar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/components/RecipeDisplay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/components/RecipeDisplay.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/components/RecipeInfoCell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/components/RecipeInfoBox.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/components/WeekdayCell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/components/CalendarColumn.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/controllers/RecipeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/controllers/RecipeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/css/CalendarScreen.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/css/CalendarScreen.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/RecipeScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/RecipeScreen.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -366,7 +358,14 @@
       <option name="project" value="LOCAL" />
       <updated>1696798837184</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="added highlighting">
+      <created>1696881694561</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1696881694561</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -389,6 +388,7 @@
     <MESSAGE value="connected quantity and measure columns" />
     <MESSAGE value="updated StringConverters" />
     <MESSAGE value="support for week editing&#10;- added WeekTemplate class&#10;- Calendar can be populated with WeekTemplates&#10;- WeekTemplates are automatically saved&#10;- correct layout" />
-    <option name="LAST_COMMIT_MESSAGE" value="support for week editing&#10;- added WeekTemplate class&#10;- Calendar can be populated with WeekTemplates&#10;- WeekTemplates are automatically saved&#10;- correct layout" />
+    <MESSAGE value="added highlighting" />
+    <option name="LAST_COMMIT_MESSAGE" value="added highlighting" />
   </component>
 </project>
