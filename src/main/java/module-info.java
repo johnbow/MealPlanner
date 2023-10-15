@@ -7,6 +7,8 @@ module src {
     requires java.sql;
     requires org.xerial.sqlitejdbc;
     requires com.google.gson;
+    requires org.glavo.png.javafx;
+    requires org.glavo.png;
 
     opens src to javafx.fxml;
     exports src;

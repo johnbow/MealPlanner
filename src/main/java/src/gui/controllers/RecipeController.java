@@ -9,6 +9,8 @@ import javafx.stage.Modality;
 import javafx.stage.StageStyle;
 import javafx.util.converter.IntegerStringConverter;
 
+import org.glavo.png.PNGWriter;
+import org.glavo.png.javafx.PNGJavaFXUtils;
 import src.data.*;
 import src.gui.components.ImageSelector;
 import src.gui.components.IngredientListViewCell;
@@ -16,6 +18,9 @@ import src.gui.components.IngredientTable;
 import src.util.QueryService;
 import src.gui.components.SearchBar;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 public class RecipeController extends Controller {
@@ -103,6 +108,17 @@ public class RecipeController extends Controller {
             System.err.println("Recipe already exists!");
             getGui().getDatabase().removeRecipeInfo(info);
             return false;
+        }
+        // save image if exists
+        if (imageSelector.getImage() != null) {
+            try (PNGWriter writer = new PNGWriter(Files.newOutputStream(Path.of(
+                    getGui().getConfig().getDataDirectory() + Config.IMAGE_FOLDER + recipe.info().filename() + ".png"
+            )))) {
+                writer.write(PNGJavaFXUtils.asArgbImage(imageSelector.getImage()));
+                System.out.println("Saved image.");
+            } catch (IOException e) {
+                System.err.println("Failed to save image.");
+            }
         }
         return true;
     }

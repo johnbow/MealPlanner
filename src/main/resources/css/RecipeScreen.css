@@ -3,3 +3,8 @@
   -fx-alignment: CENTER;
   -fx-table-cell-border-color: transparent;
 }
+
+.image-selector {
+    -fx-border-width: 1;
+    -fx-border-color: black;
+}

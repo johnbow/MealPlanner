@@ -124,7 +124,7 @@ public class Database {
             pstmt.executeUpdate();
             con.commit();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
             return false;
         }
         System.out.printf("Added %s to database.\n", recipeInfo.toString());

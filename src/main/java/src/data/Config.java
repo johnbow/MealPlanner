@@ -16,12 +16,16 @@ public final class Config {
 
     public static final boolean DO_CLEAN_INSTALL = false;
 
+    public static final double IMAGE_WIDTH = 120;
+    public static final double IMAGE_HEIGHT = 80;
+
     public static final String APPLICATION_NAME = "MealPlanner";
     public static final String AUTHOR_NAME = "Klein";
     public static final String CONFIG_FILE = "config";
     public static final String DATABASE_FILE = "food.db";
     public static final String RECIPE_FOLDER = "recipes/";
     public static final String WEEK_FOLDER = "weeks/";
+    public static final String IMAGE_FOLDER = "images/";
 
     public static final UnaryOperator<TextFormatter.Change> INT_FILTER_2_PLACES = change -> {
         String newText = change.getControlNewText();
@@ -73,6 +77,7 @@ public final class Config {
             String userDataDir = appDirs.getUserDataDir(APPLICATION_NAME, "", AUTHOR_NAME);
             config.setDataDirectory(userDataDir);
         }
+        config.prepareImageFolder();
         json.setDataDir(config.getDataDirectory());
         config.setJsonLoader(json);
         return config;
@@ -134,6 +139,7 @@ public final class Config {
 
     public void setDataDirectory(String dataDirectory) {
         this.dataDirectory = dataDirectory;
+        prepareImageFolder();
     }
 
     public int getInitialHeight() {
@@ -152,6 +158,19 @@ public final class Config {
         this.initialWidth = initialWidth;
     }
 
+    public static Image getDragAndDropImage() {
+        return dragAndDropImage;
+    }
+
+    public boolean prepareImageFolder() {
+        File dir = new File(dataDirectory + IMAGE_FOLDER);
+        if (dir.mkdirs()) {
+            System.out.println("Created " + dir.getName() + " folder.");
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) return true;
@@ -165,9 +184,4 @@ public final class Config {
     public int hashCode() {
         return Objects.hash(initialHeight, initialWidth, dataDirectory, configDirectory);
     }
-
-    public static Image getDragAndDropImage() {
-        return dragAndDropImage;
-    }
-
 }

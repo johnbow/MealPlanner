@@ -1,7 +1,6 @@
 package src.gui.components;
 
 import javafx.geometry.Insets;
-import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Region;
@@ -33,8 +32,8 @@ public class CalendarColumn extends VBox {
                 event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
             event.consume();
         });
-        setOnDragEntered(this::startHighlighting);
-        setOnDragExited(this::stopHighlighting);
+        setOnDragEntered(event -> getChildren().add(highlightBox));
+        setOnDragExited(event -> getChildren().removeIf(node -> node == highlightBox));
         setOnDragDropped(event -> {
             final Dragboard db = event.getDragboard();
             boolean success = db.hasUrl();
@@ -42,15 +41,6 @@ public class CalendarColumn extends VBox {
                 addRecipeInfo(gui.getDragContent());
             event.setDropCompleted(success);
         });
-    }
-
-    private void startHighlighting(DragEvent event) {
-        getChildren().add(highlightBox);
-    }
-
-    private void stopHighlighting(DragEvent event) {
-        // always uses the same highlightBox:
-        getChildren().removeIf(node -> node == highlightBox);
     }
 
     public void addRecipeInfo(RecipeInfo recipeInfo) {

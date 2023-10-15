@@ -9,15 +9,18 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import src.gui.components.ImageSelector?>
 <?import src.gui.components.IngredientTable?>
 <?import src.gui.components.SearchBar?>
-<?import src.gui.components.ImageSelector?>
 
 <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="20.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <BorderPane>
          <right>
-            <ImageSelector fx:id="imageSelector" cache="true" fitHeight="100.0" fitWidth="150.0" pickOnBounds="true" BorderPane.alignment="CENTER" />
+            <ImageSelector fx:id="imageSelector">
+               <BorderPane.margin>
+                  <Insets left="20.0" />
+               </BorderPane.margin></ImageSelector>
          </right>
          <left>
             <VBox spacing="15.0" BorderPane.alignment="CENTER">
