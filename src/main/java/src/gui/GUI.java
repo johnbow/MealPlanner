@@ -1,6 +1,9 @@
 package src.gui;
 
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -10,13 +13,17 @@ import src.data.RecipeInfo;
 import src.gui.controllers.Controller;
 import src.gui.controllers.Screen;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GUI {
 
     private final Stage mainStage;
     private final Config config;
     private final Database database;
+    private final Map<String, Image> imagePool;
 
     private RecipeInfo dragContent;
     private Controller controller;
@@ -26,6 +33,7 @@ public class GUI {
         this.mainStage = mainStage;
         this.config = config;
         this.database = database;
+        this.imagePool = new HashMap<>();
         this.currentScreen = null;
     }
 
@@ -85,6 +93,25 @@ public class GUI {
 
     public Database getDatabase() {
         return database;
+    }
+
+    public Map<String, Image> getImagePool() {
+        return imagePool;
+    }
+
+    /**
+     * Loads image from data image directory.
+     * @param filename Filename of image.
+     * @return The image or null if not existing.
+     */
+    public Image loadImage(String filename) {
+        File file = new File(config.getDataDirectory() + Config.IMAGE_FOLDER + filename + ".png");
+        if (!file.isFile()) return null;
+        try {
+            return new Image(file.getAbsolutePath());
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
     }
 
     private void forceRefresh() {

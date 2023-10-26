@@ -18,6 +18,7 @@ public final class Config {
 
     public static final double IMAGE_WIDTH = 120;
     public static final double IMAGE_HEIGHT = 80;
+    public static final double IMAGE_ASPECT_RATIO = IMAGE_HEIGHT / IMAGE_WIDTH;
 
     public static final String APPLICATION_NAME = "MealPlanner";
     public static final String AUTHOR_NAME = "Klein";

@@ -5,18 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4c0eac42-ae49-4629-a0fe-4ef6521f7fba" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/src/data/Text.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/src/data/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/data/Config.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/src/data/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/data/Database.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/GUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/ResourceLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/ResourceLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/components/Calendar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/components/Calendar.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/components/CalendarColumn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/components/CalendarColumn.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/components/ImageSelector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/components/ImageSelector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/controllers/IngredientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/controllers/IngredientController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/components/RecipeDisplay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/components/RecipeDisplay.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/components/RecipeInfoBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/components/RecipeInfoBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/controllers/CalendarController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/controllers/CalendarController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/src/gui/controllers/RecipeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/gui/controllers/RecipeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/css/RecipeScreen.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/css/RecipeScreen.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/RecipeScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/RecipeScreen.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -383,7 +381,14 @@
       <option name="project" value="LOCAL" />
       <updated>1696926890643</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="images can now be added to recipes&#10;- created ImageSelector&#10;- added png writer library&#10;- integrated library">
+      <created>1697403179024</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1697403179024</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -408,6 +413,7 @@
     <MESSAGE value="support for week editing&#10;- added WeekTemplate class&#10;- Calendar can be populated with WeekTemplates&#10;- WeekTemplates are automatically saved&#10;- correct layout" />
     <MESSAGE value="added highlighting" />
     <MESSAGE value="added dragAndDrop.png" />
-    <option name="LAST_COMMIT_MESSAGE" value="added dragAndDrop.png" />
+    <MESSAGE value="images can now be added to recipes&#10;- created ImageSelector&#10;- added png writer library&#10;- integrated library" />
+    <option name="LAST_COMMIT_MESSAGE" value="images can now be added to recipes&#10;- created ImageSelector&#10;- added png writer library&#10;- integrated library" />
   </component>
 </project>

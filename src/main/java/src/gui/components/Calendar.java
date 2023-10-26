@@ -29,6 +29,7 @@ public class Calendar extends GridPane {
     private Label dateLabel;
     private GUI gui;
     private Service<WeekTemplate> weekLoader;
+    private Service<Void> imageLoader;
 
     public Calendar() {
         setAlignment(Pos.CENTER);
@@ -49,7 +50,7 @@ public class Calendar extends GridPane {
             calendarColumns[i] = new CalendarColumn();
             add(calendarColumns[i], i, 1);
         }
-        initWeekLoader();
+        initServices();
 
         // Standard values:
         setWeekStart(DayOfWeek.MONDAY);
@@ -143,9 +144,10 @@ public class Calendar extends GridPane {
             for (RecipeInfo recipeInfo : week.days().get(i))
                 calendarColumns[i].addRecipeInfo(recipeInfo);
         }
+        imageLoader.restart();
     }
 
-    private void initWeekLoader() {
+    private void initServices() {
         weekLoader = new Service<>() {
             @Override
             protected Task<WeekTemplate> createTask() {
@@ -158,6 +160,19 @@ public class Calendar extends GridPane {
             }
         };
         weekLoader.setOnSucceeded(event -> setWeekTemplate(weekLoader.getValue()));
+        imageLoader = new Service<>() {
+            @Override
+            protected Task<Void> createTask() {
+                return new Task<>() {
+                    @Override
+                    protected Void call() {
+                        for (CalendarColumn column : calendarColumns)
+                            column.loadImages();
+                        return null;
+                    }
+                };
+            }
+        };
     }
 
 }

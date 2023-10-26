@@ -5,6 +5,7 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import src.data.RecipeInfo;
 import src.gui.GUI;
@@ -61,12 +62,14 @@ public class RecipeDisplay extends ScrollPane {
             if (sort)
                 items.sort(itemComparator);
         });
+        setOnScroll(event -> setHvalue(getHvalue() - event.getDeltaY()));
     }
 
     private void onRecipeInfoAdded(RecipeInfo recipeInfo) {
-        RecipeInfoBox cell = new RecipeInfoBox(gui, recipeInfo);
-        cell.setPadding(new Insets(0, 5, 0, 5));
-        contentDisplay.getChildren().add(cell);
+        RecipeInfoBox box = new RecipeInfoBox(gui, recipeInfo);
+        box.setPadding(new Insets(0, 5, 0, 5));
+        box.setDragMode(TransferMode.COPY);
+        contentDisplay.getChildren().add(box);
     }
 
     private void onRecipeInfoRemoved(int place, int count) {
@@ -76,6 +79,7 @@ public class RecipeDisplay extends ScrollPane {
     }
 
     private void updateRecipeInfo(int position) {
+        // TODO: update displayed image of recipe info box
         RecipeInfoBox recipeInfoBox = (RecipeInfoBox) contentDisplay.getChildren().get(position);
         recipeInfoBox.setRecipeInfo(items.get(position));
     }

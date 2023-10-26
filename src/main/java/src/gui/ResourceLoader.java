@@ -14,7 +14,7 @@ import java.net.URL;
 import java.util.Objects;
 
 /**
- * Used for loading resources like fxml files, images and css files.
+ * Used for loading project resources like fxml files, images and css files.
  * @author John Klein
  */
 public class ResourceLoader {

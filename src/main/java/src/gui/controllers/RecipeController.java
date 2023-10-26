@@ -11,6 +11,7 @@ import javafx.util.converter.IntegerStringConverter;
 
 import org.glavo.png.PNGWriter;
 import org.glavo.png.javafx.PNGJavaFXUtils;
+
 import src.data.*;
 import src.gui.components.ImageSelector;
 import src.gui.components.IngredientListViewCell;
